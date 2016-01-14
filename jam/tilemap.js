@@ -34,7 +34,7 @@ define(["exports", "./sprite", "./util"], function (exports, _sprite, _util) {
 									this.subSprites = [];
 									this.tiles = [];
 
-									var lines = text.split("\n");
+									lines = text.split("\n");
 
 									for (var y = 0; y < lines.length; ++y) {
 												var cells = lines[y].split(",");

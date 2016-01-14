@@ -1,4 +1,4 @@
-import jam from "../../js/jam";
+import jam from "../../jam/jam";
 
 jam.config({dataDir:"data/"});
 var game;

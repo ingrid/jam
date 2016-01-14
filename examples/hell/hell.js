@@ -1,6 +1,6 @@
 "use strict";
 
-define(["../../js/jam"], function (_jam) {
+define(["../../jam/jam"], function (_jam) {
    var _jam2 = _interopRequireDefault(_jam);
 
    function _interopRequireDefault(obj) {

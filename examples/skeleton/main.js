@@ -1,22 +1,26 @@
-require.config({
-  baseUrl:"../../jam/",
-});
+define(["../../js/jam"], function (_jam) {
+	"use strict";
 
-require(["jam", "../lib/sylvester"], function(jam, syl) {
-  jam.config({dataDir:"data/"});
+	var _jam2 = _interopRequireDefault(_jam);
 
-  var main = function() {
-	var g = new jam.Game(320, 240, document.body, 2);
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-    // Add your game logic here.
+	_jam2.default.config({
+		dataDir: "data/"
+	});
 
-	g.run();
-  };
+	var main = function main() {
+		var g = new _jam2.default.Game(320, 240, document.body, 2);
+		g.run();
+	};
 
-  var preload = function() {
-    // Preload your assets here.
-	jam.showPreloader(main);
-  };
+	var preload = function preload() {
+		_jam2.default.showPreloader(main);
+	};
 
-  preload();
+	preload();
 });

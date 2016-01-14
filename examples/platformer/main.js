@@ -1,78 +1,74 @@
-require.config({
-  baseUrl:"../../jam/",
-});
+define(["../../js/jam"], function (_jam) {
+    "use strict";
 
-require(["jam", "../lib/sylvester"], function(jam, syl) {
-  jam.config({dataDir:"data/"});
+    var _jam2 = _interopRequireDefault(_jam);
 
-  var main = function() {
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
 
-	var level = "1,0,0,0,0,0,0,1\n" +
-	  "1,0,0,0,0,0,0,1\n" +
-	  "1,0,0,0,0,0,1,1\n" +
-	  "1,0,0,0,0,0,0,1\n" +
-	  "1,1,0,0,0,0,0,1\n" +
-	  "1,0,0,0,0,0,0,1\n" +
-	  "1,0,0,0,0,0,0,1\n" +
-	  "1,1,1,1,1,1,1,1\n";
-
-	var g = new jam.Game(320, 240, document.body, 2);
-
-	var tm = new jam.TileMap(32, "tiles.png");
-	tm.x = 20;
-	tm.y = 10;
-	tm.loadCSV(level);
-
-	// convenience
-	var scene = g.root.scene;
-	scene.add(tm);
-
-	var guy = new jam.Sprite(90, 0);
-    guy.walk = new jam.Sprite.Animation([0, 1, 2, 3], 8, 0, 0, function(){
+    _jam2.default.config({
+        dataDir: "data/"
     });
-    guy.idle = new jam.Sprite.Animation([0], 0);
-	guy.setImage("player_red.png", 16, 17);
-	scene.add(guy);
-	guy.acceleration.y = 250;
 
-	guy.on("update", function(dt) {
-	  jam.Rect.collide(guy, tm);
-	  if(jam.Input.down("LEFT")) {
-		guy.velocity.x = -50;
-        guy.playAnimation(guy.walk);
-        guy.facing = jam.Sprite.LEFT;
-	  }
-	  else if (jam.Input.down("RIGHT")) {
-		guy.velocity.x = 50;
-        guy.playAnimation(guy.walk);
-        guy.facing = jam.Sprite.RIGHT;
-	  }
-	  else {
-		guy.velocity.x = 0;
-        guy.playAnimation(guy.idle);
-	  }
-	  if(jam.Input.justPressed("UP")) {
-		guy.velocity.y = -100;
-        jam.Sound.play("footstep1.mp3");
-	  }
-	});
+    var main = function main() {
+        var level = "1,0,0,0,0,0,0,1\n" + "1,0,0,0,0,0,0,1\n" + "1,0,0,0,0,0,1,1\n" + "1,0,0,0,0,0,0,1\n" + "1,1,0,0,0,0,0,1\n" + "1,0,0,0,0,0,0,1\n" + "1,0,0,0,0,0,0,1\n" + "1,1,1,1,1,1,1,1\n";
+        var g = new _jam2.default.Game(320, 240, document.body, 2);
+        var tm = new _jam2.default.TileMap(32, "tiles.png");
+        tm.x = 20;
+        tm.y = 10;
+        tm.loadCSV(level);
+        var scene = g.root.scene;
+        scene.add(tm);
+        var guy = new _jam2.default.Sprite(90, 0);
+        guy.walk = new _jam2.default.Sprite.Animation([0, 1, 2, 3], 8, 0, 0, function () {});
+        guy.idle = new _jam2.default.Sprite.Animation([0], 0);
+        guy.setImage("player_red.png", 16, 17);
+        scene.add(guy);
+        guy.acceleration.y = 250;
+        guy.on("update", function (dt) {
+            _jam2.default.Rect.collide(guy, tm);
 
-	g.root.on("update", function() {
-	  if(jam.Input.justPressed("MOUSE_LEFT")){
-		console.log([jam.Input.mouse.x, jam.Input.mouse.y]);
-	  }
-	});
+            if (_jam2.default.Input.down("LEFT")) {
+                guy.velocity.x = -50;
+                guy.playAnimation(guy.walk);
+                guy.facing = _jam2.default.Sprite.LEFT;
+            } else if (_jam2.default.Input.down("RIGHT")) {
+                guy.velocity.x = 50;
+                guy.playAnimation(guy.walk);
+                guy.facing = _jam2.default.Sprite.RIGHT;
+            } else {
+                guy.velocity.x = 0;
+                guy.playAnimation(guy.idle);
+            }
 
-	g.run();
-  };
+            if (_jam2.default.Input.justPressed("UP")) {
+                guy.velocity.y = -100;
 
-  var preload = function() {
-  	jam.preload("image.png");
-  	jam.preload("tiles.png");
-  	jam.preload("player_red.png");
-  	jam.preload("footstep1.mp3");
-  	jam.showPreloader(main);
-  };
+                _jam2.default.Sound.play("footstep1.mp3");
+            }
+        });
+        g.root.on("update", function () {
+            if (_jam2.default.Input.justPressed("MOUSE_LEFT")) {
+                console.log([_jam2.default.Input.mouse.x, _jam2.default.Input.mouse.y]);
+            }
+        });
+        g.run();
+    };
 
-  preload();
+    var preload = function preload() {
+        _jam2.default.preload("image.png");
+
+        _jam2.default.preload("tiles.png");
+
+        _jam2.default.preload("player_red.png");
+
+        _jam2.default.preload("footstep1.mp3");
+
+        _jam2.default.showPreloader(main);
+    };
+
+    preload();
 });

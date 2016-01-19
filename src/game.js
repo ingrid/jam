@@ -23,7 +23,7 @@ export default game = function(width, height, parentElement, zoom){
     this.root.add(this.root.ui);
 
     if(parentElement === undefined) {
-	parentElement = document.body;
+        parentElement = document.body;
     }
 
     this.width = width;
@@ -36,10 +36,10 @@ export default game = function(width, height, parentElement, zoom){
 
     // Always keep the canvas in the middle of the parent element
     var onresize = function(){
-	this._canvas.style.left = (parentElement.clientWidth / 2 - (this.width * this.zoom) / 2) + "px";
-	this._canvas.style.top = (parentElement.clientHeight / 2 - (this.height * this.zoom) / 2) + "px";
-	this._canvas.style.width = (this.width * this.zoom) + "px";
-	this._canvas.style.height = (this.height * this.zoom) + "px";
+        this._canvas.style.left = (parentElement.clientWidth / 2 - (this.width * this.zoom) / 2) + "px";
+        this._canvas.style.top = (parentElement.clientHeight / 2 - (this.height * this.zoom) / 2) + "px";
+        this._canvas.style.width = (this.width * this.zoom) + "px";
+        this._canvas.style.height = (this.height * this.zoom) + "px";
     }.bind(this);
     onresize();
     parentElement.onresize = onresize;
@@ -55,14 +55,14 @@ export default game = function(width, height, parentElement, zoom){
     // If they didn't supply this argument, assume the doc body
     // as the parent element for the canvas
     if(parentElement === undefined || parentElement === null){
-	parentElement = document.body;
+        parentElement = document.body;
     }
     parentElement.appendChild(this._canvas);
 
     this._tick = function(){
-	this.update();
-	this.render();
-	window.setTimeout(this._tick, 1000.0/this.fps);
+        this.update();
+        this.render();
+        window.setTimeout(this._tick, 1000.0/this.fps);
     }.bind(this);
 
     Util.mixinOn(this);
@@ -80,8 +80,8 @@ game.prototype.update = function(){
     this.time = (currentTime - startTime) / 1000.0;
 
     if(this.hasFocus) {
-	this.root.update(this.elapsed);
-	Input.update(this);
+        this.root.update(this.elapsed);
+        Input.update(this);
     }
 };
 

@@ -38,5 +38,3 @@ lib.preload = Util.preload;
 lib.showPreloader = Util.showPreloader;
 
 lib.log = Util.log;
-
-

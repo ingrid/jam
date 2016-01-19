@@ -58,6 +58,8 @@ define(["../../jam/jam"], function (_jam) {
         g.run();
     };
 
+    _jam2.default.Debug.showBoundingBoxes = true;
+
     var preload = function preload() {
         _jam2.default.preload("image.png");
 

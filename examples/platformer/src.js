@@ -63,6 +63,8 @@ var main = function() {
 	g.run();
 };
 
+jam.Debug.showBoundingBoxes = true;
+
 var preload = function() {
   	jam.preload("image.png");
   	jam.preload("tiles.png");

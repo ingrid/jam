@@ -58,7 +58,7 @@
 				height:100%;
 			}
 		</style>
-	<script language="javascript" src="jam/jam.js"></script>
+	<script language="javascript" src="../../jam/jam.js"></script>
 	<script language="javascript">
 		window.onload = function(){
 			var canvasFrame = document.getElementById("right");
@@ -67,7 +67,7 @@
 			var frame = null;
 			var lastValue = "";
 			var lastIncValue = "";
-			
+
 			evaluate = function(){
 				var incLines = includeText.value.split("\n");
 				var incs = "";
@@ -87,7 +87,7 @@
 				newFrame.contentWindow.onfocus = function(){ canvasFrame.childNodes[0].style.backgroundColor="#fff" }
 				newFrame.contentWindow.onblur = function(){ canvasFrame.childNodes[0].style.backgroundColor="#ddd"; }
 			}
-					
+
 			okd = function(o){
 				return function(){
 					if(event.which == 9){
@@ -116,26 +116,26 @@
 			}
 			codeText.onkeydown = okd(codeText);
 			includeText.onkeydown = okd(includeText);
-			
-			
+
+
 			window.setInterval(function(){
 				if(lastValue != codeText.value) { evaluate(); lastValue = codeText.value; }
 				if(lastIncValue != includeText.value) { evaluate(); lastIncValue = includeText.value; }
 			}, 300);
 			evaluate();
-			
+
 			codeText.onfocus = function(){codeText.style.backgroundColor = "#000";}
 			codeText.onblur = function(){codeText.style.backgroundColor = "#222";}
 			includeText.onfocus = function(){includeText.style.backgroundColor = "#000";}
-			includeText.onblur = function(){includeText.style.backgroundColor = "#222";}			
+			includeText.onblur = function(){includeText.style.backgroundColor = "#222";}
 		}
 	</script>
 </head>
 <body>
 	<div class="side left" style="padding:10px">
-		
-		<div class="leftbox">		
-			<textarea id="includes" style="height:40px"><script src="jam/jam.js"></script></textarea>
+
+		<div class="leftbox">
+			<textarea id="includes" style="height:40px"><script src="../../jam/jam.js"></script></textarea>
 			<textarea id="code">// Initialize
 var game = jam.Game(400, 300, document.body);
 game.bgColor = "rgb(255,255,255)";
@@ -148,13 +148,13 @@ game.run();
 </textarea><br/>
 			<div style="text-align:center;">
 				The canvas automatically refreshes when you write code.
-			</div>	
+			</div>
 		</div>
 
 		<div class="note">
 			Be careful of using this tool for anything big - you will be sad when you accidentally lose your work
 			because you pressed 'back' on your browser.
-		</div>		
+		</div>
 	</div>
 
 	<div class="side right">

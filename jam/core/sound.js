@@ -1,4 +1,3 @@
-
 var Sound = function() {
   // Play just calls the audio tag play function, or loads it first
   // then plays it.

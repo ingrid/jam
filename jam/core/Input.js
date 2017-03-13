@@ -1,4 +1,4 @@
-import Vector from './Vector';
+import Vector from './vector';
 
 // This is how we get keyboard input for now, and maybe mouse in the future.
 // This object is much more like a namespace than a class. There's a lot of

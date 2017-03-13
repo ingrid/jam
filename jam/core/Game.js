@@ -1,7 +1,7 @@
-import Vector from './Vector';
-import Input from './Input';
+import Vector from './vector';
+import Input from './input';
 
-class Game {
+export default class Game {
   constructor(width, height, parentElement) {
     this._canvas = document.createElement("canvas");
     this._canvas.style.position = "relative";
@@ -71,7 +71,7 @@ class Game {
     }
     // bmac is did I decompile this correctly?
     // temporarily sticking this here while restructuring.
-    Input.update();
+    Input._update();
   }
 
 
@@ -107,5 +107,3 @@ class Game {
     });
   }
 }
-
-export default Game;

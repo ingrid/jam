@@ -75,6 +75,5 @@ Entity.load_mod = function (mod, as_default, name) {
   } else {
     Entity.mods.sprite[name] = mod.sprite;
     Entity.mods.game[name] = mod.game;
-    console.log(Entity.mods);
   }
 };

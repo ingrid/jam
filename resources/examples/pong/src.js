@@ -154,8 +154,7 @@ var initialize = function(){
 
 	// Finally, start the game.
 	game.run();
-}
-
+};
 
 var preload = function(){
   jam.preload("pong_data/ball.png");

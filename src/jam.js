@@ -1,13 +1,13 @@
-import Meta from "./core/meta"
-import Vector from "./core/vector"
-import Util from "./core/util"
-import Game from "./core/game"
-import Sprite from "./core/sprite"
-import Input from "./core/input"
-import Sound from "./core/sound"
-import Text from "./core/text"
-import Entity from "./core/entity"
-import mod_map from "./core/mod_map"
+import Meta from "./core/meta";
+import Vector from "./core/vector";
+import Util from "./core/util";
+import Game from "./core/game";
+import Sprite from "./core/sprite";
+import Input from "./core/input";
+import Sound from "./core/sound";
+import Text from "./core/text";
+import Entity from "./core/entity";
+import mod_map from "./core/mod_map";
 
 // Load all the default modules
 

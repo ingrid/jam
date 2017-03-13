@@ -16,7 +16,7 @@ window.onload = function(){
 }
 
 var initialize = function(){
-	var game = jam.Game(640, 480, document.body);
+	var game = new jam.Game(640, 480, document.body);
 
 	var map = jam.LevelMap(32, 50, 50, TILESET);
 
@@ -35,3 +35,14 @@ var initialize = function(){
 
 	game.run();
 };
+
+var preload = function(){
+  jam.preload(TILESET);
+  jam.showPreloader(document.body, initialize);
+};
+
+if (document.readyState === "complete"){
+  preload();
+} else {
+  window.onload = preload;
+}

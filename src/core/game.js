@@ -8,6 +8,7 @@ export default class Game {
     this._context = this._canvas.getContext("2d");
     this._children = [];
     //jam.Game._canvas = this._canvas;
+    Input.canvas = this._canvas;
 
     // List of objects to be removed
     this._remove = [];

@@ -47,6 +47,9 @@ export default class Game {
       this.render();
       window.setTimeout(this._tick, 1000.0 / this.fps);
     }.bind(this);
+    this.run = this.run.bind(this);
+    this.update = this.update.bind(this);
+    this.render = this.render.bind(this);
   }
 
   update() {

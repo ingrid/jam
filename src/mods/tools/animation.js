@@ -1,3 +1,4 @@
+import jam from "../../jam";
 import Module from "../../core/module";
 import Meta from "../../core/meta";
 import Util from "../../core/util";
@@ -56,7 +57,7 @@ Animation.Strip = function (frames, frameWidth, frameHeight, rate, offsetX, offs
 };
 
 var lib;
-export default lib = {};
+export default lib = new Module();;
 
 lib.load = function (jam) {
 	jam.Animation = Animation;
@@ -80,7 +81,7 @@ lib.sprite.init = function () {
 			this.frame = this.animation.frames[0];
 			this.animationFrame = 0;
 		}
-	};
+	}.bind(this);
 };
 
 lib.sprite.update = function (elapsed) {

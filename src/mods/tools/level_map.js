@@ -16,7 +16,7 @@ jam.LevelMap = function (tilesize, w, h, image, indices, padding) {
 	self.indices = indices;
 
 	// The LevelMap should function like a collisongroup for tiles.
-	self.tileCollisionGroup = _jam2.default.CollisionGroup();
+	self.tileCollisionGroup = new jam.CollisionGroup();
 	self.image = null;
 	// We have to pretend no image has been given (so it stays null) until it
 	// is completely loaded. Otherwise we'd try to render it and get DOM errs
@@ -70,7 +70,7 @@ jam.LevelMap = function (tilesize, w, h, image, indices, padding) {
 		// If there's a function callback for this tileindex, call it.
 			// But usually just place the tile.
 		if (!indices || indices[ti] === undefined) {
-			var t = _jam2.default.LevelMap.Tile(x, y, tilesize, tilesize, ti, true);
+			var t = jam.LevelMap.Tile(x, y, tilesize, tilesize, ti, true);
 			if (self.tiles[y][x] !== null) {
 				self.tileCollisionGroup.remove(self.tiles[y][x]);
 			}

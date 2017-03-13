@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d jam",
+    "examples": "babel resources/examples/pong/src.js --out-file resources/examples/pong/pong.js && babel resources/examples/platformer/src.js --out-file resources/examples/platformer/platformer.js",
     "lint": "jshint jam"
   },
   "author": "morganq, ingrid",

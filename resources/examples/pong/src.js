@@ -1,41 +1,40 @@
+import jam from "../../../jam/jam";
+import collide_rect from "../../../jam/mods/physics/collision/rect";
+
 // RectCollision gives us functionality for detecting and resolving collisions
 // between sprites, and treats them each as a rectangle.
-jam.includeModule("RectCollision");
+jam.mod(collide_rect);
 
-window.onload = function(){
-	initialize();
-}
-
-initialize = function(){
+var initialize = function(){
 	// Initialize the game at 500 x 300 pixel resolution. The canvas
 	// gets added to the page as a child of document.body
-	var game = jam.Game(500, 300, document.body);
-	
+	var game = new jam.Game(500, 300, document.body);
+
 	// Score [player score, ai score]
 	var score = [0,0];
 
 	// The text object which will display the scores
-	var scoreTxt = jam.Text(203, 50);
+	var scoreTxt = new jam.Text(203, 50);
 	game.add(scoreTxt);
-	
+
 	// Create a sprite representing the ball
-	var ball = jam.Sprite(300, 150);
+	var ball = new jam.Sprite(300, 150, 'collide_rect');
 	// Load the ball image (which we preloaded) into the sprite.
 	ball.setImage("pong_data/ball.png");
 	// Add the ball so that the game knows to draw and update it.
 	game.add(ball);
-	
-	var player = jam.Sprite(10, 100);	// Player's paddle
+
+	var player = new jam.Sprite(10, 100, 'collide_rect');	// Player's paddle
 	player.setImage("pong_data/paddle_player.png");
 	game.add(player);
 
-	var ai = jam.Sprite(464, 100);	// AI's Paddle
+	var ai = new jam.Sprite(464, 100, 'collide_rect');	// AI's Paddle
 	ai.setImage("pong_data/paddle_ai.png");
 	game.add(ai);
 
-	// Put player and AI in same collision group so the ball 
+	// Put player and AI in same collision group so the ball
 	// can collide with either.
-	var paddles = jam.CollisionGroup();
+	var paddles = new jam.CollisionGroup();
 	paddles.add(player);
 	paddles.add(ai);
 
@@ -50,7 +49,7 @@ initialize = function(){
 	player.update = jam.extend(player.update, function(elapsed){
 		// Reset velocity
 		player.velocity.y = 0;
-		
+
 		// And then set it based on input
 		if( jam.Input.buttonDown("UP") ){
 			player.velocity.y = -250;
@@ -58,20 +57,20 @@ initialize = function(){
 		if( jam.Input.buttonDown("DOWN") ){
 			player.velocity.y = 250;
 		}
-		
+
 		// Clamp the y position so it doesn't go out of bounds.
 		player.y = Math.min(Math.max(0, player.y), 300 - player.height);
 	});
-	
-	// If you want to take a look at what code you end up with after all the 
+
+	// If you want to take a look at what code you end up with after all the
 	// extending of behavior, just inspect the flatCode property of function.
 	jam.log(player.update.flatCode);
 	// The console will show each function that gets called when the update occurs.
-	
+
 	ball.update = jam.extend(ball.update, function(elapsed){
 		// First of all, the ball needs to bounce off the paddles.
-	
-		// Overlaps calls the supplied callback function if a collision 
+
+		// Overlaps calls the supplied callback function if a collision
 		// is detected, and passes the two colliding objects into it.
 		// In this case, 'paddles' is a collision group with two objects,
 		// the player and the ai, and the response to colliding depends on
@@ -86,18 +85,18 @@ initialize = function(){
 
 			// Offset the y velocity based on where it hit the paddle
 			// This is where we reference 'other' which we get from the overlaps
-			// callback. 
-			yOff = ((ball.y + ball.height / 2) - (other.y + other.height/2)) / other.height;
+			// callback.
+			var yOff = ((ball.y + ball.height / 2) - (other.y + other.height/2)) / other.height;
 
 			ball.velocity.x *= 1.1;	// Speed up
 			ball.velocity.y += yOff * 300;	// Adjust the y speed based on where on the paddle it hit.
 		});
-		
+
 		// Bounce off the top and bottom
 		if(ball.y >= 300 - ball.height || ball.y <= 0){
-			ball.velocity.y = -ball.velocity.y
+			ball.velocity.y = -ball.velocity.y;
 		}
-		
+
 		// Score on the left side
 		if(ball.x <= 0){
 			ball.reset();
@@ -116,7 +115,7 @@ initialize = function(){
 		ball.y = 140;
 		ball.velocity.x = Math.random() > 0.5 ? 200 : -200;
 		ball.velocity.y = Math.random() * 400 - 200;
-	}	
+	};
 	ball.reset();
 
 
@@ -148,11 +147,24 @@ initialize = function(){
 		scoreTxt.text = score[0] + " - " + score[1];
 	});
 
-	bg = jam.Sprite(0,0);	// Background image.
+	var bg = new jam.Sprite(0,0);	// Background image.
 	bg.setImage("pong_data/background.png");
 	bg.setLayer(-1);
 	game.add(bg);
-	
-	// Finally, start the game. 
+
+	// Finally, start the game.
 	game.run();
+};
+
+var preload = function(){
+  jam.preload("pong_data/ball.png");
+  jam.preload("pong_data/paddle_player.png");
+  jam.preload("pong_data/paddle_ai.png");
+  jam.showPreloader(document.body, initialize);
+};
+
+if (document.readyState === "complete"){
+  preload();
+} else {
+  window.onload = preload;
 }

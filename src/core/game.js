@@ -1,13 +1,14 @@
-import Vector from './Vector';
-import Input from './Input';
+import Vector from './vector';
+import Input from './input';
 
-class Game {
+export default class Game {
   constructor(width, height, parentElement) {
     this._canvas = document.createElement("canvas");
     this._canvas.style.position = "relative";
     this._context = this._canvas.getContext("2d");
     this._children = [];
     //jam.Game._canvas = this._canvas;
+    Input.canvas = this._canvas;
 
     // List of objects to be removed
     this._remove = [];
@@ -47,6 +48,9 @@ class Game {
       this.render();
       window.setTimeout(this._tick, 1000.0 / this.fps);
     }.bind(this);
+    this.run = this.run.bind(this);
+    this.update = this.update.bind(this);
+    this.render = this.render.bind(this);
   }
 
   update() {
@@ -71,7 +75,7 @@ class Game {
     }
     // bmac is did I decompile this correctly?
     // temporarily sticking this here while restructuring.
-    Input.update();
+    Input._update();
   }
 
 
@@ -107,5 +111,3 @@ class Game {
     });
   }
 }
-
-export default Game;

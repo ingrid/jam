@@ -1,5 +1,5 @@
-import Vector from './Vector';
-
+import Vector from './vector';
+import Module from './module';
 // This is how we get keyboard input for now, and maybe mouse in the future.
 // This object is much more like a namespace than a class. There's a lot of
 // stuff hidden in closures and self is not used. We just return an object with
@@ -27,9 +27,9 @@ buttonBindings = {attack: "Z", dash: "X"};
 if(jam.Input.buttonDown(buttonBindings.attack)) { player.playAnimation(attacking); }
 
 */
-
+// Keyboard is independent of canvas, but mouse requires a canvas to calculate position. If we want mutiple canvases later on we can modularize the mouse code but for now we are just shoving the first game cancas we make here.
 var lib = {};
-
+lib.canvas = undefined;
 export default lib;
 
 var KEY_CODE_MAP = {
@@ -47,7 +47,7 @@ var MOUSE_BUTTON_MAP = {
 
 
 var _getMouseCoords = function (e) {
-  if (jam.Game._canvas === undefined) {
+  if (lib.canvas === undefined) {
     return;
   }
   var x;
@@ -61,10 +61,11 @@ var _getMouseCoords = function (e) {
     x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
     y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
   }
-  x -= jam.Game._canvas.offsetLeft;
-  y -= jam.Game._canvas.offsetTop;
+  x -= lib.canvas.offsetLeft;
+  y -= lib.canvas.offsetTop;
 
-  if (x >= 0 && x < jam.Game._canvas.width && y >= 0 && y < jam.Game._canvas.height) {
+  // We need to be mindful of how CSS zoom may affect this.
+  if (x >= 0 && x < lib.canvas.width && y >= 0 && y < lib.canvas.height) {
     return new Vector(x, y);
   }
 };
@@ -142,26 +143,24 @@ document.onkeyup = function (e) {
     lib._justReleasedButtons.push(lib._getName(code));
   }
 };
-/** /
-    document.onmousedown = function(e){
-    var button = lib._getMouseButton(e.which);
-    if(lib._buttons[button] === false || lib._buttons[button] === undefined){
+document.onmousedown = function(e){
+  var button = lib._getMouseButton(e.which);
+  if(lib._buttons[button] === false || lib._buttons[button] === undefined){
     lib._buttons[button] = true;
     lib._justPressedButtons.push(button);
-    }
-    };
-    document.onmouseup = function(e){
-    var button = lib._getMouseButton(e.which);
-    if(lib._buttons[button] === true){
+  }
+};
+document.onmouseup = function(e){
+  var button = lib._getMouseButton(e.which);
+  if(lib._buttons[button] === true){
     lib._buttons[button] = false;
     lib._justReleasedButtons.push(button);
-    }
-    };
-    document.onmousemove = function(e){
-    var mouse = _getMouseCoords(e);
-    if(mouse != undefined){
+  }
+};
+document.onmousemove = function(e){
+  var mouse = _getMouseCoords(e);
+  if(mouse != undefined){
     lib.mouse = mouse;
-    }
-    // Else mouse is not on the canvas so we don't update the position.
-    };
-    /**/
+  }
+  // Else mouse is not on the canvas so we don't update the position.
+};

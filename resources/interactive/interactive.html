@@ -58,7 +58,6 @@
 				height:100%;
 			}
 		</style>
-	<script language="javascript" src="../../jam/jam.js"></script>
 	<script language="javascript">
 		window.onload = function(){
 			var canvasFrame = document.getElementById("right");
@@ -135,16 +134,20 @@
 	<div class="side left" style="padding:10px">
 
 		<div class="leftbox">
-			<textarea id="includes" style="height:40px"><script src="../../jam/jam.js"></script></textarea>
-			<textarea id="code">// Initialize
-var game = jam.Game(400, 300, document.body);
-game.bgColor = "rgb(255,255,255)";
+			<textarea id="includes" style="height:40px"></script>	<script language="javascript" src="../lib/require.js"></script></textarea>
+	<textarea id="code">
+    require(["../../jam/jam"], function(jam) {
+    jam = jam.default;
+    // Initialize
+    var game = new jam.Game(400, 300, document.body);
+    game.bgColor = "rgb(255,255,255)";
 
-game.update = jam.extend(game.update, function(){
-	// Happens every frame
-});
+    game.update = jam.extend(game.update, function(){
+	  // Happens every frame
+    });
 
-game.run();
+    game.run();
+    });
 </textarea><br/>
 			<div style="text-align:center;">
 				The canvas automatically refreshes when you write code.

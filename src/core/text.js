@@ -1,6 +1,6 @@
-import Sprite from './Sprite';
+import Sprite from './sprite';
 
-class Text extends Sprite {
+export default class Text extends Sprite {
   constructor(x, y) {
     super(x, y)
     this.text = "";
@@ -14,9 +14,6 @@ class Text extends Sprite {
     context.fillText(this.text, this.x - camera.scroll.x * this.parallax.x, this.y - camera.scroll.y * this.parallax.y);
   }
 }
-
-export default Text;
-
 
 /*
 var lib;

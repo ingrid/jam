@@ -1,4 +1,4 @@
-class Vector {
+export default class Vector {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -37,8 +37,6 @@ class Vector {
     return Vector.divl(this, v);
   }
 }
-
-export default Vector;
 
 // Adds a vector to a vector
 Vector.add = function (v1, v2) {

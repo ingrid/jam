@@ -17,20 +17,20 @@ import Sprite from '../../../core/sprite';
 // or something)
 
 /*	SAMPLE USAGE:
- 
+
  ** checking overlap between two objects **
  // inside an update function:
  if(player.overlaps(robot)){
  	game.remove(robot);
  };
- 
- 
+
+
  ** checking overlap between two groups of objects **
  robots = jam.CollisionGroup();
  bullets = jam.CollisionGroup();
  robots.add(stuff);
  bullets.add(stuff);
- 
+
  // inside update
  // the function defined here takes a single robot and a single bullet.
  jam.Collision.overlaps(robots, bullets, function(robot, bullet){
@@ -38,17 +38,17 @@ import Sprite from '../../../core/sprite';
  	game.remove(bullet);
  	bullets.remove(bullet);
  });
- 
- 
+
+
  ** collision response **
  platforms = jam.CollisionGroup();
  var plat = jam.Sprite(......)
  plat.immovable = true;
  platforms.add(plat);
- 
+
  //inside update
  player.collide(platforms);
- 
+
  */
 
 var Collision = {};

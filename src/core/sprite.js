@@ -1,6 +1,6 @@
-import Util from './Util';
-import Vector from './Vector';
-import Entity from './Entity';
+import Util from './util';
+import Vector from './vector';
+import Entity from './entity';
 
 class Sprite extends Entity {
   constructor(x, y, coms) {
@@ -52,9 +52,9 @@ class Sprite extends Entity {
     }.bind(this));
   }
 
-  _set_image_helper(img, frameWidth, frameHeight) {}
+  imageLoaded() {}
 
-  ue: function
+  _set_image_helper(img, frameWidth, frameHeight) {}
 
   render(context, camera) {
     super.render(context, camera);

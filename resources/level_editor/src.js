@@ -1,7 +1,10 @@
-jam.includeModule("RectCollision");
-jam.includeModule("LevelMap");
+import jam from "../../jam/jam";
+import level_map from "../../jam/mods/tools/level_map";
+import collide_rect from "../../jam/mods/physics/collision/rect";
 
-TILESET = "../examples/platformer/platformer_data/tiles.png";
+jam.mod(collide_rect);
+
+var TILESET = "../examples/platformer/platformer_data/tiles.png";
 
 window.onload = function(){
 	// Start loading images immediately instead of when they're needed
@@ -12,8 +15,8 @@ window.onload = function(){
 	jam.showPreloader(document.body, initialize);
 }
 
-initialize = function(){
-	var game = jam.Game(640, 480, document.body);
+var initialize = function(){
+	var game = new jam.Game(640, 480, document.body);
 
 	var map = jam.LevelMap(32, 50, 50, TILESET);
 
@@ -31,4 +34,15 @@ initialize = function(){
 	game.add(map);
 
 	game.run();
+};
+
+var preload = function(){
+  jam.preload(TILESET);
+  jam.showPreloader(document.body, initialize);
+};
+
+if (document.readyState === "complete"){
+  preload();
+} else {
+  window.onload = preload;
 }

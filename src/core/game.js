@@ -1,17 +1,23 @@
 import Vector from './vector';
 import Input from './input';
+import Camera from './camera';
 
 export default class Game {
   constructor(width, height, parentElement) {
+    this.camera = {};
+    this.camera.default = new Camera(width, height);
     this._canvas = document.createElement("canvas");
     this._canvas.style.position = "relative";
     this._context = this._canvas.getContext("2d");
-    this._children = [];
-    //jam.Game._canvas = this._canvas;
-    Input.canvas = this._canvas;
+    this.width = width;
+    this.height = height;
+    this._canvas.width = this.width;
+    this._canvas.height = this.height;
 
-    // List of objects to be removed
-    this._remove = [];
+    this.state = null; // This should never be null while the game is actually running.
+
+    // Eventually we want input to hook in via the module system.
+    Input.canvas = this._canvas;
 
     // Always keep the canvas in the middle of the parent element
     var onresize = function () {
@@ -21,17 +27,10 @@ export default class Game {
     onresize();
     parentElement.onresize = onresize;
 
-    this.width = width;
-    this.height = height;
     this.fps = 50; // Frequency
     this.elapsed = 0; // Period
+    // Should time go in state?
     this.time = 0;
-    this.camera = {
-      scroll: new Vector(0, 0),
-      size: new Vector(this.width, this.height),
-      follow: null
-    };
-    this.bgColor = "rgb(255,255,255)";
 
     // If they didn't supply this argument, assume the doc body
     // as the parent element for the canvas
@@ -39,9 +38,6 @@ export default class Game {
       parentElement = document.body;
     }
     parentElement.appendChild(this._canvas);
-
-    this._canvas.width = this.width;
-    this._canvas.height = this.height;
 
     this._tick = function () {
       this.update();
@@ -54,60 +50,44 @@ export default class Game {
   }
 
   update() {
-    // This filter just says "only leave me if i'm not in the remove list"
-    this._children = this._children.filter(function (x, i, a) {
-      return this._remove.indexOf(x) === -1;
+    // This filter just says "only leave me if I'm not in the remove list"
+    this.state._children = this.state._children.filter(function (x, i, a) {
+      return this.state._remove.indexOf(x) === -1;
     }.bind(this));
-    this._remove = [];
+    this.state._remove = [];
 
     this.elapsed = 1.0 / this.fps;
     this.time += this.elapsed;
 
     // Simplest possible follow code
-    if (this.camera.follow !== null) {
-      this.camera.scroll.x = this.camera.follow.x - this.width / 2;
-      this.camera.scroll.y = this.camera.follow.y - this.height / 2;
-    }
+    // Eventually we should modulatrize cameras to give options for folllow types, filters, and effects.
+    this.state.camera.update();
 
     // Call update on each child and pass it the elapsed time
-    for (var i = this._children.length - 1; i >= 0; --i) {
-      this._children[i].update(this.elapsed);
+    for (var i = this.state._children.length - 1; i >= 0; --i) {
+      this.state._children[i].update(this.elapsed);
     }
-    // bmac is did I decompile this correctly?
-    // temporarily sticking this here while restructuring.
+
+    // Temporarily sticking this here while restructuring.
     Input._update();
   }
 
-
   render() {
     var ctx = this._context;
-    ctx.fillStyle = this.bgColor;
+    ctx.fillStyle = this.state.bgColor;
     ctx.fillRect(0, 0, this.width, this.height);
-    for (var i = this._children.length - 1; i >= 0; --i) {
-      this._children[i].render(ctx, this.camera);
+    for (var i = this.state._children.length - 1; i >= 0; --i) {
+      this.state._children[i].render(ctx, this.state.camera);
     }
   }
 
-  add(sprite) {
-    this._children.push(sprite);
-    sprite._game = this;
-    this.sortSprites(); // Sort to figure out layering
-  }
-
-  remove(sprite) {
-    if (this._remove.indexOf(sprite) === -1) {
-      this._remove.push(sprite);
-      sprite._game = null;
-    }
+  set_state(s){
+    this.state = s;
+    this.state.camera.size = new Vector(this.width, this.height),
+    s.enter();
   }
 
   run() {
     this._tick();
-  }
-
-  sortSprites() {
-    this._children.sort(function (a, b) {
-      return b._layer - a._layer;
-    });
   }
 }

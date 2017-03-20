@@ -51,7 +51,7 @@ jam.LevelMap = function (tilesize, w, h, image, indices, padding) {
 
 		// And only render the ones that are on-screen
 		for (var y = Math.max(0, y1); y < Math.min(y2 + 1, self.height); ++y) {
-			for (var x = Math.max(0, x1); x < Math.min(x2 + 1, self.width); ++x) {
+    	for (var x = Math.max(0, x1); x < Math.min(x2 + 1, self.width); ++x) {
 				var t = self.tiles[y][x];
 				if (t !== null && self.image) {
 					var dx = x * self.tilesize - Math.floor(camera.scroll.x);

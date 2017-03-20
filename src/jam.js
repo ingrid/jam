@@ -7,14 +7,13 @@ import Input from "./core/input";
 import Sound from "./core/sound";
 import Text from "./core/text";
 import Entity from "./core/entity";
+import State from "./core/state";
 import mod_map from "./core/mod_map";
 
-// Load all the default modules
-
 var lib;
-
 export default lib = {};
 
+// Load all the default modules
 lib.Meta = Meta;
 lib.Vector = Vector;
 lib.Util = Util;
@@ -23,19 +22,19 @@ lib.Sprite = Sprite;
 lib.Input = Input;
 lib.Sound = Sound;
 lib.Text = Text;
+lib.State = State;
 
+// Eventually this will be removed in favor of mixins and super.
 lib.extend = Meta.extend;
 lib.ex = Meta.extend;
 
+// Stuff for asset management.
 lib.cache = Util.cache;
-
+lib.load = Util.load;
 lib.config = function (obj) {
   Util.dataDir = obj.dataDir || "";
   Util.logLevel = obj.logLevel || 0;
 };
-
-// Loads and caches image files or sound files.
-lib.load = Util.load;
 
 // Preload just calls load and counts the number of currently loading objects
 lib.preload = Util.preload;
@@ -45,12 +44,10 @@ lib.showPreloader = Util.showPreloader;
 
 lib.log = Util.log;
 
-/** /
-  lib.config = function(obj) {
-    Util.dataDir = obj.dataDir || "";
-    Util.logLevel = obj.logLevel || 0;
-  };
-/**/
+lib.config = function(obj) {
+  Util.dataDir = obj.dataDir || "";
+  Util.logLevel = obj.logLevel || 0;
+};
 
 lib.mod = function (mod, as_default, name) {
   if (name == undefined) {

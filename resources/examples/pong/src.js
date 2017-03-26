@@ -1,9 +1,10 @@
 import jam from "../../../jam/jam";
-import collide_rect from "../../../jam/mods/physics/collision/rect";
+//import collide_rect from "../../../jam/mods/physics/collision/rect";
 
 // RectCollision gives us functionality for detecting and resolving collisions
 // between sprites, and treats them each as a rectangle.
-jam.mod(collide_rect);
+//jam.mod(collide_rect);
+jam.load_mod('rect');
 
 var initialize = function(){
 	// Initialize the game at 500 x 300 pixel resolution. The canvas

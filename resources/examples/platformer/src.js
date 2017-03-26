@@ -12,7 +12,6 @@ var initialize = function(){
 
   //ggame.set_state(new PlayState(game));
   game.set_state(new SplashState(game));
-  console.log('here?');
 	game.run();
 };
 
@@ -28,7 +27,6 @@ class SplashState extends jam.State{
 class PlayState extends jam.State{
   constructor(game){
     super();
-    console.log('playsyaye');
     var bg = new jam.Sprite(0, 0);
 	  bg.width = 640; bg.height = 480;
 	  bg.image = document.createElement("canvas");

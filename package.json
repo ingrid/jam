@@ -5,9 +5,9 @@
   "main": "jam/jam.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack src/jam.js jam/jam.js --devtool source-map",
-    "examples": "webpack resources/examples/pong/src.js resources/examples/pong/pong.js --devtool source-map && webpack resources/examples/platformer/src.js resources/examples/platformer/platformer.js --devtool source-map",
-    "tools": "webpack resources/level_editor/src.js resources/level_editor/level_editor.js --devtool source-map",
+    "build": "bash build.sh",
+    "examples": "bash build.sh examples",
+    "tools": "bash build.sh tools",
     "lint": "jshint jam"
   },
   "author": "morganq, ingrid",

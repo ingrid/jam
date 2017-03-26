@@ -2,7 +2,7 @@ import jam from "../../../jam/jam";
 import collide_rect from "../../../jam/mods/physics/collision/rect";
 import animation from "../../../jam/mods/tools/animation";
 import level_map from "../../../jam/mods/tools/level_map";
-import map1 from "platformer_data/map.js";
+import map1 from "./platformer_data/map.js";
 
 jam.mod(collide_rect);
 jam.mod(animation);

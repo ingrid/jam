@@ -50,6 +50,8 @@ export default class Game {
   }
 
   update() {
+    Input._update();
+
     // This filter just says "only leave me if I'm not in the remove list"
     this.state._children = this.state._children.filter(function (x, i, a) {
       return this.state._remove.indexOf(x) === -1;
@@ -67,9 +69,6 @@ export default class Game {
     for (var i = this.state._children.length - 1; i >= 0; --i) {
       this.state._children[i].update(this.elapsed);
     }
-
-    // Temporarily sticking this here while restructuring.
-    Input._update();
   }
 
   render() {

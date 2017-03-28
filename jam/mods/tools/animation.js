@@ -57,7 +57,7 @@ Animation.Strip = function (frames, frameWidth, frameHeight, rate, offsetX, offs
 };
 
 var lib;
-export default lib = new Module();;
+export default lib = new Module();
 
 lib.load = function (jam) {
 	jam.Animation = Animation;

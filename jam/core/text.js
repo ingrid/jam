@@ -10,6 +10,7 @@ export default class Text extends Sprite {
 
   render(context, camera) {
     context.font = this.font;
+    context.textBaseline="hanging";
     context.fillStyle = this.color;
     context.fillText(this.text, this.x - camera.scroll.x * this.parallax.x, this.y - camera.scroll.y * this.parallax.y);
   }

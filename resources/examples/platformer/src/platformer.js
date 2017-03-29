@@ -1,16 +1,15 @@
-import jam from "../../../jam/jam";
-import collide_rect from "../../../jam/mods/physics/collision/rect";
-import animation from "../../../jam/mods/tools/animation";
-import level_map from "../../../jam/mods/tools/level_map";
-import map1 from "./platformer_data/map.js";
+import jam from "../../../../jam/jam";
+import collide_rect from "../../../../jam/mods/physics/collision/rect";
+import animation from "../../../../jam/mods/tools/animation";
+import level_map from "../../../../jam/mods/tools/level_map";
+import map1 from "../platformer_data/map.js";
 
-jam.mod(collide_rect);
-jam.mod(animation);
+import proto from "../../../../jam/mods/tools/proto";
 
 var initialize = function(){
   var game = new jam.Game(640, 480, document.body);
 
-  //ggame.set_state(new PlayState(game));
+  // game.set_state(new PlayState(game));
   game.set_state(new SplashState(game));
 	game.run();
 };
@@ -18,9 +17,34 @@ var initialize = function(){
 class SplashState extends jam.State{
   constructor(game){
     super();
+
+    var instructions = [
+      "arrow keys to move",
+      "1, 2, and 3 to change color",
+      "e to erase"
+    ];
+
+    var i, t, b;
+    var x = 20;
+    var y = 20;
+    for (i=0;i<instructions.length;i++){
+      b = new jam.Sprite(x, y);
+      b.setImage(proto.tri(18, 18, 'right', 240, 56, 124), 18, 18);
+      this.add(b);
+
+      t = new jam.Text(x + 20, y);
+      t.text = instructions[i];
+      t.font = '20px Aerial';
+      t.color = 'rgb(0, 0, 0)';
+      this.add(t);
+
+      y += 20;
+    }
+
     window.setTimeout(function(){
       game.set_state(new PlayState(game));
-    }, 2000);
+    // }, 2000);
+    }, 50);
   }
 }
 
@@ -141,6 +165,8 @@ var makePlayer = function(game, map){
 };
 
 var preload = function(){
+  jam.mod(collide_rect);
+  jam.mod(animation);
   jam.preload("platformer_data/player.png");
   jam.showPreloader(document.body, initialize);
 };

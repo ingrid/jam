@@ -1,10 +1,4 @@
-import jam from "../../../jam/jam";
-//import collide_rect from "../../../jam/mods/physics/collision/rect";
-
-// RectCollision gives us functionality for detecting and resolving collisions
-// between sprites, and treats them each as a rectangle.
-//jam.mod(collide_rect);
-jam.load_mod('rect');
+import jam from "../../../../jam/jam";
 
 var initialize = function(){
 	// Initialize the game at 500 x 300 pixel resolution. The canvas
@@ -17,9 +11,14 @@ var initialize = function(){
 };
 
 var preload = function(){
+  // RectCollision gives us functionality for detecting and resolving collisions
+  // between sprites, and treats them each as a rectangle.
+  jam.load_mod('rect');
+
   jam.preload("pong_data/ball.png");
   jam.preload("pong_data/paddle_player.png");
   jam.preload("pong_data/paddle_ai.png");
+
   jam.showPreloader(document.body, initialize);
 };
 

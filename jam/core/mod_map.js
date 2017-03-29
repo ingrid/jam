@@ -9,7 +9,7 @@ var mods = {
 var map = {
   rect : mods.collision +  'rect.js',
 
-  animated : mods.tools + 'animation.js',
+  animation : mods.tools + 'animation.js',
   color_key : mods.tools + 'color_key.js',
   debug : mods.tools + 'debug.js',
   level_map : mods.tools + 'level_map.js',

@@ -8,7 +8,7 @@ import Sound from "./core/sound";
 import Text from "./core/text";
 import Entity from "./core/entity";
 import State from "./core/state";
-import mod_map from "./core/mod_map";
+
 
 var lib;
 export default lib = {};
@@ -49,25 +49,8 @@ lib.config = function(obj) {
   Util.logLevel = obj.logLevel || 0;
 };
 
-lib.mod = function (mod, as_default, name) {
-  if (name == undefined) {
-    name = mod.name;
-  }
-  mod.preLoad();
-  mod.load(lib);
-  Entity.load_mod(mod, as_default, name);
-};
+lib.mod = Util.mod;
+lib.load_mod = Util.load_mod;
 
-// Add a flag on load module that loads mod as a 'default' so that that all new sprites incorperate it without declaration?
-lib.load_mod = function (name, as_default) {
-  var mod_file = mod_map[name];
-  if (mod_file != undefined) {
-    // Including mod prefix here to help with some weird webpack static analysis.
-    // It will error if you pass in just a variable, for now at least.
-    import("./mods/" + mod_file).then(function(mod){
-      lib.mod(mod.default);
-    });
-  } else {
-    console.log('No module found for ' + name);
-  }
-};
+// For the module loading system.
+Util.jam = lib;

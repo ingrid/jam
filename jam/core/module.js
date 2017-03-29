@@ -1,5 +1,4 @@
 class Module {
-
   constructor() {
     this.sprite = {
       init: function init() {},
@@ -16,7 +15,7 @@ class Module {
 
   preLoad() {
     // Makes sure any required modules are loaded beforehand.
-    // Do we need modLevel? ModGroup? Do we need hooks fod deconstruct or delete?
+    // Do we need modLevel? ModGroup? Do we need hooks for deconstruct or delete?
   }
 }
 

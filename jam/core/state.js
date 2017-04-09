@@ -1,43 +1,51 @@
-import Camera from "./camera";
+import Game from './game';
+import Camera from './camera';
 
-// A container for state to streamline switching and cleanup.
-export default class state{
-  constructor(w, h, state_data){
+export default class State{
+  constructor(systems){
     this._children = [];
-    // List of objects to be removed
     this._remove = [];
-    this.camera = new Camera(0, 0);
+    this.systems = {};
+    this.camera = new Camera();
 
-    this.bgColor = "rgb(255,255,255)";
+    this.run(systems);
   }
-  add(sprite) {
-    this._children.push(sprite);
-    // sprite._game = this;
-    this.sort_sprites(); // Sort to figure out layering
+// We can probabaly take visible off renderable, just remove the render system, right?
+  add(entity){
+    var i;
+    for (i = 0; i < entity.systems.length; i++){
+      if (this.systems[entity.systems[i]] != undefined){
+        this.systems[entity.systems[i]].list.push(entity);
+      }else{
+        // System not on the state yet
+      }
+    }
+    this._children.push(entity);
   }
 
-  remove(sprite) {
-    if (this._remove.indexOf(sprite) === -1) {
-      this._remove.push(sprite);
-      // sprite._game = null;
+  remove(entity){
+    // This should take entities out of all related state systems;
+  }
+
+  run(systems){
+    systems = systems || [];
+    if (systems.length == undefined){
+      systems = [systems];
+    }
+
+    var i;
+    for (i = 0; i < systems.length; i++){
+      var tag = systems[i];
+      if (this.systems[tag] == undefined){  // It doesn't already exist on the state.
+        var s = Game.systems[tag];
+        if (s != undefined){
+          this.systems[tag] = {};
+          this.systems[tag].lib = s;
+          this.systems[tag].list = [];
+        }else{
+          console.log("No system found for tag: " + tag);
+        }
+      }
     }
   }
-
-  sort_sprites() {
-    this._children.sort(function (a, b) {
-      return b._layer - a._layer;
-    });
-  }
-
-  enter(){
-  }
-  exit(){
-  }
 }
-
-state.preload = class preload extends state{
-  // A special case screen while loading assets.
-  constructor(){
-    super();
-  }
-};

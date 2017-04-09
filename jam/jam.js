@@ -1,56 +1,26 @@
-import Meta from "./core/meta";
-import Vector from "./core/vector";
-import Util from "./core/util";
-import Game from "./core/game";
-import Sprite from "./core/sprite";
-import Input from "./core/input";
-import Sound from "./core/sound";
-import Text from "./core/text";
-import Entity from "./core/entity";
-import State from "./core/state";
-
+import Game from './core/game';
+import Entity from './core/entity';
+import System from './core/system';
+import State from './core/state';
 
 var lib;
 export default lib = {};
 
 // Load all the default modules
-lib.Meta = Meta;
-lib.Vector = Vector;
-lib.Util = Util;
 lib.Game = Game;
-lib.Sprite = Sprite;
-lib.Input = Input;
-lib.Sound = Sound;
-lib.Text = Text;
+lib.Entity = Entity;
+lib.System = System;
 lib.State = State;
 
-// Eventually this will be removed in favor of mixins and super.
-lib.extend = Meta.extend;
-lib.ex = Meta.extend;
+// Shortcuts
+lib.e = lib.Entity;
+lib.c = lib.Component;
+lib.s = lib.System;
 
-// Stuff for asset management.
-lib.cache = Util.cache;
-lib.load = Util.load;
-lib.config = function (obj) {
-  Util.dataDir = obj.dataDir || "";
-  Util.logLevel = obj.logLevel || 0;
+lib.load = function(s){
+  if (mod_map.systems.s != undefined){
+    mod_map.s[s] = mod_map.systems.s;
+  }else{
+    console.log('No module found for name: ' + s);
+  }
 };
-
-// Preload just calls load and counts the number of currently loading objects
-lib.preload = Util.preload;
-
-// Makes a canvas filling the parent element
-lib.showPreloader = Util.showPreloader;
-
-lib.log = Util.log;
-
-lib.config = function(obj) {
-  Util.dataDir = obj.dataDir || "";
-  Util.logLevel = obj.logLevel || 0;
-};
-
-lib.mod = Util.mod;
-lib.load_mod = Util.load_mod;
-
-// For the module loading system.
-Util.jam = lib;

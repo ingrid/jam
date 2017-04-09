@@ -5,6 +5,7 @@
   "main": "jam/jam.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "t": "bash build.sh test",
     "build": "bash build.sh",
     "examples": "bash build.sh examples",
     "tools": "bash build.sh tools",

@@ -1,92 +1,95 @@
-import Vector from './vector';
-import Input from './input';
-import Camera from './camera';
+import State from './state';
+import RenderSystem from './render';
 
-export default class Game {
-  constructor(width, height, parentElement) {
-    this.camera = {};
-    this.camera.default = new Camera(width, height);
-    this._canvas = document.createElement("canvas");
-    this._canvas.style.position = "relative";
-    this._context = this._canvas.getContext("2d");
+export default class Game{
+  constructor(width, height, parent){
+    width = width || 500;
+    height = height || 300;
+    parent = parent || document.body;
+
     this.width = width;
     this.height = height;
+
+    this.state = new State();
+
+    this._canvas = document.createElement("canvas");
+    this._canvas.style.position = "relative";
+    this._canvas.style.border = "1px solid black";
     this._canvas.width = this.width;
     this._canvas.height = this.height;
+    this._context = this._canvas.getContext("2d");
 
-    this.state = null; // This should never be null while the game is actually running.
 
-    // Eventually we want input to hook in via the module system.
-    Input.canvas = this._canvas;
-
-    // Always keep the canvas in the middle of the parent element
-    var onresize = function () {
-      this._canvas.style.left = parentElement.clientWidth / 2 - width / 2 + "px";
-      this._canvas.style.top = parentElement.clientHeight / 2 - height / 2 + "px";
-    }.bind(this);
-    onresize();
-    parentElement.onresize = onresize;
 
     this.fps = 50; // Frequency
     this.elapsed = 0; // Period
-    // Should time go in state?
     this.time = 0;
 
-    // If they didn't supply this argument, assume the doc body
-    // as the parent element for the canvas
-    if (parentElement === undefined || parentElement === null) {
-      parentElement = document.body;
-    }
-    parentElement.appendChild(this._canvas);
-
-    this._tick = function () {
-      this.update();
-      this.render();
-      window.setTimeout(this._tick, 1000.0 / this.fps);
+    parent.appendChild(this._canvas);
+    var onresize = function () {
+      this._canvas.style.left = parent.clientWidth / 2 - width / 2 + "px";
+      this._canvas.style.top = parent.clientHeight / 2 - height / 2 + "px";
     }.bind(this);
+    onresize();
+    parent.onresize = onresize;
+
+    this._tick = this._tick.bind(this);
     this.run = this.run.bind(this);
-    this.update = this.update.bind(this);
-    this.render = this.render.bind(this);
-  }
-
-  update() {
-    Input._update();
-
-    // This filter just says "only leave me if I'm not in the remove list"
-    this.state._children = this.state._children.filter(function (x, i, a) {
-      return this.state._remove.indexOf(x) === -1;
-    }.bind(this));
-    this.state._remove = [];
-
-    this.elapsed = 1.0 / this.fps;
-    this.time += this.elapsed;
-
-    // Simplest possible follow code
-    // Eventually we should modulatrize cameras to give options for folllow types, filters, and effects.
-    this.state.camera.update();
-
-    // Call update on each child and pass it the elapsed time
-    for (var i = this.state._children.length - 1; i >= 0; --i) {
-      this.state._children[i].update(this.elapsed);
-    }
-  }
-
-  render() {
-    var ctx = this._context;
-    ctx.fillStyle = this.state.bgColor;
-    ctx.fillRect(0, 0, this.width, this.height);
-    for (var i = this.state._children.length - 1; i >= 0; --i) {
-      this.state._children[i].render(ctx, this.state.camera);
-    }
-  }
-
-  set_state(s){
-    this.state = s;
-    this.state.camera.size = new Vector(this.width, this.height),
-    s.enter();
+    this.loop = this.loop.bind(this);
   }
 
   run() {
     this._tick();
   }
+
+  _tick(){
+    this.loop();
+    window.setTimeout(this._tick, 1000.0 / this.fps);
+  }
+
+  loop(){
+    // Filter out entities on the remove list.
+    this.state._children = this.state._children.filter(function (e, i, a) {
+      var keep = this.state._remove.indexOf(e) === -1;
+      // Stuff to deactivate entity.
+      return keep;
+    }.bind(this));
+    this.state._remove = [];
+
+    this.elapsed = 1.0 / this.fps;
+    this.time += this.elapsed;
+    var key;
+    for (key in this.state.systems) {
+      if (this.state.systems[key].lib.update != undefined){
+        this.state.systems[key].lib.update(this.state.systems[key].list, this);
+      }
+    }
+  }
+
+  register(systems){
+    systems = systems || [];
+    if (systems.length == undefined){
+      systems = [systems];
+    }
+
+    var i;
+    for (i = 0; i < systems.length; i++){
+      if (tmp[systems[i]] != undefined){
+        Game.systems[systems[i]] = new tmp[systems[i]](this);
+      }else{
+        console.log('Could not register system: ' + systems[i]);
+      }
+    }
+  }
+
+  set_state(s){
+    this.state = s;
+  }
 }
+
+var tmp = {
+  render : RenderSystem
+};
+
+// Bookmark systems once loaded so they can be shared across multiple states.
+Game.systems = {};

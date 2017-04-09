@@ -14,4 +14,6 @@ elif [ $command = 'examples' ]; then
     webpack resources/examples/snake/src/snake.js resources/examples/snake/js/snake.js --devtool source-map --output-public-path js/
 elif [ $command = 'tools' ]; then
     webpack resources/level_editor/src.js resources/level_editor/level_editor.js --devtool source-map
+elif [ $command = 'test' ]; then
+    webpack test/src/test.js test/js/test.js --devtool source-map --output-public-path js/
 fi

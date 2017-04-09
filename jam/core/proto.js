@@ -38,7 +38,7 @@ proto.rect = function(width, height, r, g, b, a){
   d.ctx.fillStyle = c;
   d.ctx.fillRect(0, 0, width, height);
 
-  return d.dataUrl();
+  return d.img();
 };
 
 proto.sq = function(size, r, g, b, a){
@@ -54,7 +54,7 @@ proto.cir = function(radius, r, g, b, a){
   d.ctx.fillStyle = c;
   d.ctx.fill();
 
-  return d.dataUrl();
+  return d.img();
 };
 
 var angle = {
@@ -91,5 +91,5 @@ proto.tri = function(width, height, direction, r, g, b, a){
   d.ctx.fillStyle = c;
   d.ctx.fill();
 
-  return d.dataUrl();
+  return d.img();
 };

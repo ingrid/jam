@@ -2,7 +2,8 @@ import jam from "../../jam/jam";
 import proto from "../../jam/core/proto";
 
 import util from "../../jam/core/util";
-
+import g from "../../jam/core/geometry";
+import v from "../../jam/core/vector";
 
 if (document.readyState === "complete"){
   initialize();
@@ -26,30 +27,35 @@ function initialize(){
   });
 	game.run();
 };
-
+var p, o;
 class PlayState extends jam.State{
   constructor(){
     super(['input','script','render', 'physics']);
-    var p = new Player();
+
+    p = new Player(70, 70);
+    o = new Obstacle(80, 80);
+
+    console.log(p.shape.edges);
+    console.log(o.shape.edges);
+
+    console.log(p.shape.normals);
+    console.log(o.shape.normals);
+
     this.add(p);
+    this.add(o);
   }
 }
 
-
 class Player extends jam.e{
-  constructor(){
+  constructor(x, y){
     var p_img = proto.sq(20, 100, 100, 100);
     super(['script', 'physics', 'render'], {
-      position : {x : 0,
-                  y : 0
-                 },
-      collisionBox : {
-      },
-      image : {
-        src : p_img,
-        width : 20,
-        height : 20
-      },
+      position : new v(x, y),
+      shape : new g.Shape([new v(0, 0), new v(20, 0),
+                          new v(20, 20), new v(0, 20)]),
+      image : { src : p_img,
+                width : 20,
+                height : 20 },
       visible : true
     });
   }
@@ -57,7 +63,11 @@ class Player extends jam.e{
   update(e){
     this.velocity.x = 0;
     this.velocity.y = 0;
-
+    if (jam.Collision.overlap_single(this, o)){
+      console.log('foo');
+    }else{
+      console.log('bar');
+    }
     if( jam.Input.buttonDown("UP") ){
 			this.velocity.y = -250;
 		}
@@ -70,5 +80,22 @@ class Player extends jam.e{
     if( jam.Input.buttonDown("RIGHT") ){
 			this.velocity.x = 250;
 		}
+  }
+}
+
+class Obstacle extends jam.e{
+  constructor(x, y){
+    var p_img = proto.sq(20, 255, 100, 100);
+    super(['script', 'physics', 'render'], {
+      position : new v(x, y),
+      shape : new g.Shape([new v(0, 0), new v(20, 0),
+                           new v(20, 20), new v(0, 20)]),
+      image : {
+        src : p_img,
+        width : 20,
+        height : 20
+      },
+      visible : true
+    });
   }
 }

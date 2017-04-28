@@ -11,7 +11,6 @@ export default class System{
   init(e){
     // Look at prexisting components on the entity,
     // populate with default values if necessary.
-    console.log(this.required);
     var i;
     for (i = 0; i < this.required.length; i++){
       // Only looking for undefined, null is allowed.

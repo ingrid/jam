@@ -7,14 +7,24 @@ export default class State{
     this._remove = [];
     this.systems = {};
     this.camera = new Camera();
-
+    this.active = false;
     this.run(systems);
   }
-// We can probabaly take visible off renderable, just remove the render system, right?
+
+  activate(g){
+    this.active = true;
+  }
+
+  deactivate(){
+    this.active = false;
+  }
+
+  // We can probabaly take visible off renderable, just remove the render system, right?
   add(entity){
     var i;
     for (i = 0; i < entity.systems.length; i++){
       if (this.systems[entity.systems[i]] != undefined){
+        this.systems[entity.systems[i]].lib.init(entity);
         this.systems[entity.systems[i]].list.push(entity);
       }else{
         // System not on the state yet

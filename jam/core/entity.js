@@ -21,8 +21,9 @@ export default class Entity{
         // Add to system.
         var s = Game.systems[tag];
         if (s != undefined){
+          console.log(tag);
           this.systems.push(tag);
-          //this.systems[tag].init(this);
+          Game.systems[tag].init(this);
         }else{
           console.log("No system found for tag: " + tag);
         }

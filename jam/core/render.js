@@ -7,8 +7,8 @@ export default class RenderSystem extends System{
                      'angle',
                      'alpha',
                      'image',
-                     'facing'
-                    ];
+                     'facing',
+                     'parallax'];
   }
 
   update(e_list, game){

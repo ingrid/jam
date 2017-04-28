@@ -18,5 +18,11 @@ export default defaults = {
   angle : 0,
   parallax : new v(0, 0),
 
-  animation : null
+  update : function(){
+
+  },
+
+  animation : null,
+
+  facing : 0
 };

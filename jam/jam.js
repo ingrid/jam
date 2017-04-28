@@ -2,6 +2,7 @@ import Game from './core/game';
 import Entity from './core/entity';
 import System from './core/system';
 import State from './core/state';
+import Input from './core/input';
 
 var lib;
 export default lib = {};
@@ -11,6 +12,7 @@ lib.Game = Game;
 lib.Entity = Entity;
 lib.System = System;
 lib.State = State;
+lib.Input = Input;;
 
 // Shortcuts
 lib.e = lib.Entity;

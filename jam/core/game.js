@@ -1,5 +1,9 @@
 import State from './state';
+
+import InputSystem from './input';
+import PhysicsSystem from './physics';
 import RenderSystem from './render';
+import ScriptSystem from './script';
 
 export default class Game{
   constructor(width, height, parent){
@@ -18,8 +22,6 @@ export default class Game{
     this._canvas.width = this.width;
     this._canvas.height = this.height;
     this._context = this._canvas.getContext("2d");
-
-
 
     this.fps = 50; // Frequency
     this.elapsed = 0; // Period
@@ -83,12 +85,19 @@ export default class Game{
   }
 
   set_state(s){
+    if (this.state != null){
+      this.state.deactivate();
+    }
     this.state = s;
+    this.state.activate(this);
   }
 }
 
 var tmp = {
-  render : RenderSystem
+  input : InputSystem,
+  physics : PhysicsSystem,
+  render : RenderSystem,
+  script : ScriptSystem
 };
 
 // Bookmark systems once loaded so they can be shared across multiple states.

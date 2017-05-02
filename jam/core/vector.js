@@ -1,3 +1,5 @@
+// I should look into pooling for this class.
+
 export default class Vector {
   constructor(x, y){
     this.x = x;
@@ -39,6 +41,16 @@ export default class Vector {
 
   dot(v){
     return Vector.dot(this, v);
+  }
+
+  normalize(scale) {
+    if (!scale){ scale = 1; }
+    var norm = Math.sqrt(this.x * this.x + this.y * this.y);
+
+    if (norm != 0) { // This is (0,0)
+      return  new Vector(scale * this.x / norm,
+                         scale * this.y / norm);
+    }else{ return new Vector(0, 0); }
   }
 }
 

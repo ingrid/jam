@@ -65,6 +65,19 @@ class Shape{
     return new Shape(vertices);
   }
 
+  _centroid(){
+    // This is pretty loose because we only need a rough idea of center
+    // for determining mtv directions.
+    var i;
+    var tx = 0;
+    var ty = 0;
+    for (i=0; i<this.vertices.length; i++){
+      tx += this.vertices.x;
+      ty += this.vertices.y;
+    }
+    return new v(tx/i, ty/i);
+  }
+
   map(type, f){
     // Type can be vertex or corner.
   }
@@ -76,10 +89,17 @@ class Projection{
     this.max = max;
   }
 
-  overlaps(p){
-    if (this.min >= p.min && this.min <= p.max){ return true; }
-    if (this.max >= p.min && this.max <= p.max){ return true; }
-    return false;
+  overlap(p){
+    // Return overlap for MTV.
+    if (this.min >= p.min && this.min <= p.max){
+      return this.min - p.min;
+    }
+    if (this.max >= p.min && this.max <= p.max){
+      return this.max - p.min;
+    }
+
+    // No overlap.
+    return -1;
   }
 }
 Geometry.Shape = Shape;

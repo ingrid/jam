@@ -63,7 +63,9 @@ class Player extends jam.e{
   update(e){
     this.velocity.x = 0;
     this.velocity.y = 0;
-    if (jam.Collision.overlap_single(this, o)){
+    // var col = jam.Collision.overlap_single(this, o);
+    var col = jam.Collision.collide_single(this, o);
+    if (col){
       console.log('foo');
     }else{
       console.log('bar');

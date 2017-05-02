@@ -17,12 +17,12 @@ export default defaults = {
   alpha : 1,
   angle : 0,
   parallax : new v(0, 0),
+  facing : 0,
+  animation : null,
 
   update : function(){
 
   },
 
-  animation : null,
-
-  facing : 0
+  immovable : false
 };

@@ -19,7 +19,7 @@ export default class RenderSystem extends System{
 
   update_entity(entity, game){
     if (entity.image !== null && entity.visible) {
-      // Avoid horrible automatic blending if we have non-integer values
+      // Avoid automatic blending if we have non-integer values
       var tx = Math.floor(entity.position.x - game.state.camera.scroll.x *
                           entity.parallax.x + entity.image.width / 2);
       var ty = Math.floor(entity.position.y - game.state.camera.scroll.y *

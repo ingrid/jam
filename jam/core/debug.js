@@ -4,7 +4,7 @@ var LOG_TIMEOUT = 8;
 var old_log;
 
 export default class DebugSystem extends System{
-  constructor(g){
+  constructor(game){
     super();
     old_log = console.log;
     window.setTimeout(function(){
@@ -25,12 +25,12 @@ export default class DebugSystem extends System{
     if (e.systems.includes('physics')){
       // Should actually be collision, we'll deal with that later.
       var ctx = game._context;
-      var i, v, n;
+      var i, v, n, fv, fn;
       ctx.beginPath();
       var b = e.body.transform(e.position);
       for (i=0; i<b.vertices.length; i++){
-        v = b.vertices[i];
-        n = b.vertices[i+1==b.vertices.length?0:i+1];
+        v = b.vertices[i].floor(); // Current vertex.
+        n = b.vertices[i+1==b.vertices.length?0:i+1].floor(); // "Next" vertex.
         ctx.fillRect(v.x-1, v.y-1, 3, 3);
 
         // TODO: Remove reduntant moveTos

@@ -12,6 +12,8 @@ if (document.readyState === "complete"){
 };
 
 function initialize(){
+  // Ideally I'd want debug to run on one line, like so.
+  // jam.debug.run();
 	var game = new jam.Game(500, 300, document.body);
 
   // This is the order for now.
@@ -20,12 +22,15 @@ function initialize(){
                  'physics',
                  'render',
                  'debug']);
+
   game.set_state(new PlayState());
   util.mixinOn(game);
   game.on('loop', function(e){
-		if( jam.Input.buttonDown("UP") ){
+    if( jam.Input.buttonDown("MOUSE_LEFT") ){
+      console.log('woo');
     }
   });
+
 	game.run();
 };
 

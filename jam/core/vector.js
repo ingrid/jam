@@ -41,6 +41,10 @@ export default class Vector {
     return Vector.div(this, v);
   }
 
+  floor(){
+    return new Vector(Math.floor(this.x), Math.floor(this.y));
+  }
+
   dot(v){
     return Vector.dot(this, v);
   }

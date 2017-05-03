@@ -1,0 +1,96 @@
+#!/usr/bin/env node
+
+var path = require('path');
+
+var webpack = require('webpack');
+
+var config = {
+  context: path.dirname(__dirname),
+  output: {
+    path: path.join(__dirname, 'tmp'),
+    filename: '[name]',
+    libraryTarget: 'commonjs2',
+  },
+}
+
+var tests = require('glob').sync('jelly/jam/**/*-test.js', {
+  cwd: config.context,
+});
+
+config.entry = tests
+.reduce(function(carry, key) {
+  carry[key] = path.resolve(config.context, key);
+  return carry;
+}, {});
+
+var compiler = webpack(config);
+
+var watchMode = process.argv.reduce(function(carry, opt) {return carry || /^--watch/.test(opt);}, false);
+
+if (watchMode) {
+  compiler.watch({}, function() {});
+}
+else {
+  compiler.run(function() {});
+}
+
+function hash(content) {
+  return require('crypto').createHash('sha1').update(content).digest().hexSlice();
+}
+
+compiler.plugin('emit', function(compilation, cb) {
+  Object.keys(compilation.assets).forEach(function(key) {
+    try {
+      var keyPath = path.resolve(config.output.path, key);
+      var existing = require('fs').readFileSync(keyPath);
+      if (hash(existing) === hash(compilation.assets[key].source())) {
+        delete compilation.assets[key];
+      }
+    }
+    catch (_) {}
+  });
+  cb();
+});
+
+var cliOnce = false;
+
+const description = `Runs tests using the QUnit framework.
+
+  Files should be a space-separated list of file/directory paths and/or glob
+  expressions. Defaults to 'test/**/*.js'.
+
+  For more info on working with QUnit, check out http://qunitjs.com.`;
+
+const program = require( "commander" );
+const findReporter = require( "qunitjs/bin/find-reporter" );
+program._name = "qunit";
+program
+	.usage( "[options] [files]" )
+	.description( description )
+	.option( "-f, --filter <filter>", "filter which tests run" )
+	.option( "-r, --reporter <name>", "specify the reporter to use; " +
+		"if no match is found a list of available reporters will be displayed" )
+	.option( "--seed [value]", "specify a seed to order your tests; " +
+		"if option is specified without a value, one will be generated" )
+	.option( "-w, --watch", "Watch files for changes and re-run the test suite" )
+	.parse( process.argv );
+
+const args = program.args;
+const options = {
+  filter: program.filter,
+  reporter: findReporter( program.reporter ),
+  seed: program.seed
+};
+
+compiler.plugin('done', function() {
+  if (watchMode && cliOnce) {
+    return;
+  }
+  cliOnce = true;
+
+  if (process.env.NODE_ENV == null) {
+    process.env.NODE_ENV = 'test';
+  }
+
+  require('qunitjs/bin/run')(['tmp'], options);
+});

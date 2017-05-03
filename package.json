@@ -15,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "jshint": "^2.9.4",
+    "qunitjs": "^2.3.2",
     "webpack": "^2.3.2"
   },
   "dependencies": {}

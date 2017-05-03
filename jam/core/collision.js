@@ -5,9 +5,8 @@ export default class CollisionSystem extends System{
   constructor(){
     super();
     this.required = ['position',
-                     'angle'
-                     //shape
-                    ];
+                     'angle',
+                     'body'];
   }
 
   update(e_list, game){
@@ -30,10 +29,10 @@ CollisionSystem.collide_single = function(e1, e2){
   else { sco1 = 0.5; sco2 = 0.5; }
 
   var mtv = o[1].normalize(o[0] * sco1);
-  console.log(mtv);
+
   var dir;
-  if (mtv.dot(e1.shape._centroid()) > 0){
-    // Pointing towards shape 1.
+  if (mtv.dot(e1.body._centroid()) > 0){
+    // Pointing towards body 1.
     e1.position.add(mtv.mul(-1));
     e2.position.add(mtv);
   }else{
@@ -45,8 +44,8 @@ CollisionSystem.collide_single = function(e1, e2){
 };
 
 CollisionSystem.overlap_single = function (e1, e2){
-  var s1 = e1.shape.transform(e1.position);
-  var s2 = e2.shape.transform(e2.position);
+  var s1 = e1.body.transform(e1.position);
+  var s2 = e2.body.transform(e2.position);
 
   var axes = s1.normals.concat(s2.normals);
   var i;

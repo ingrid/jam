@@ -2,8 +2,7 @@ import v from "./vector";
 
 var Geometry;
 export default Geometry = {};
-
-
+// Sub types: rect, circle, multi/complex.
 
 class Line{
   constructor(v1, v2){
@@ -32,7 +31,7 @@ class Shape{
     var i;
     var normals = [];
     for (i=0;i<this.edges.length;i++){
-      var n = new v(-this.edges[i].x, this.edges[i].y);
+      var n = new v(-this.edges[i].y, this.edges[i].x);
       normals.push(n);
     }
     return normals;

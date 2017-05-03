@@ -1,6 +1,8 @@
 import System from "./system";
 import v from "./vector";
 
+// Very basic 2D movement.
+
 export default class PhysicsSystem extends System{
   constructor(){
     super();

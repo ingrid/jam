@@ -1,9 +1,11 @@
 // I should look into pooling for this class.
 
+var pool = [];
+
 export default class Vector {
   constructor(x, y){
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
   }
 
   // Returns a nice string representation of the vector

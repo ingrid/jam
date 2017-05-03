@@ -1,5 +1,6 @@
 import State from './state';
 
+import DebugSystem from './debug';
 import InputSystem from './input';
 import PhysicsSystem from './physics';
 import RenderSystem from './render';
@@ -94,6 +95,7 @@ export default class Game{
 }
 
 var tmp = {
+  debug : DebugSystem,
   input : InputSystem,
   physics : PhysicsSystem,
   render : RenderSystem,

@@ -31,7 +31,7 @@ class Shape{
     var i;
     var normals = [];
     for (i=0;i<this.edges.length;i++){
-      var n = new v(-this.edges[i].y, this.edges[i].x);
+      var n = new v(-this.edges[i].y, this.edges[i].x).normalize();;
       normals.push(n);
     }
     return normals;
@@ -43,8 +43,8 @@ class Shape{
     var i;
     for (i=1; i<this.vertices.length; i++){
       var p = this.vertices[i].dot(a);
-      if( min > p){ min = p; }
-      if( max < p){ max = p; }
+      if(min > p){ min = p; }
+      if(max < p){ max = p; }
     }
     return new Projection(min, max);
   }
@@ -71,10 +71,10 @@ class Shape{
     var tx = 0;
     var ty = 0;
     for (i=0; i<this.vertices.length; i++){
-      tx += this.vertices.x;
-      ty += this.vertices.y;
+      tx += this.vertices[i].x;
+      ty += this.vertices[i].y;
     }
-    return new v(tx/i, ty/i);
+    return new v(tx/i, ty/i).floor();
   }
 
   map(type, f){
@@ -91,7 +91,7 @@ class Projection{
   overlap(p){
     // Return overlap for MTV.
     if (this.min >= p.min && this.min <= p.max){
-      return this.min - p.min;
+      return p.max - this.min;
     }
     if (this.max >= p.min && this.max <= p.max){
       return this.max - p.min;

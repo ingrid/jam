@@ -18,8 +18,8 @@ function initialize(){
 
   // This is the order for now.
   game.register(['input',
-                 'script',
                  'physics',
+                 'script',
                  'render',
                  'debug']);
 
@@ -102,15 +102,16 @@ class Obstacle extends jam.e{
            'physics',
            'debug', //
            'render'], {
-      position : new v(x, y),
-      body : new g.Shape([new v(0, 0), new v(20, 0),
-                          new v(20, 20), new v(0, 20)]),
-      image : {
-        src : p_img,
-        width : 20,
-        height : 20
-      },
-      visible : true
-    });
+             position : new v(x, y),
+             body : new g.Shape([new v(0, 0), new v(20, 0),
+                                 new v(20, 20), new v(0, 20)]),
+             image : {
+               src : p_img,
+               width : 20,
+               height : 20
+             },
+             visible : true,
+             immovable : true
+           });
   }
 }

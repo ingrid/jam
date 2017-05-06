@@ -5,15 +5,22 @@ import InputSystem from './input';
 import PhysicsSystem from './physics';
 import RenderSystem from './render';
 import ScriptSystem from './script';
+import TextSystem from './text';
+
+var defaults = { parent : document.body,
+               debug : false,
+               zoom : 1,
+               fps : 60,
+               prefabs : false,
+               mixins : false };
 
 export default class Game{
-  constructor(width, height, parent){
-    width = width || 500;
-    height = height || 300;
-    parent = parent || document.body;
+  constructor(width, height, config){
+    var conf = {};
+    Object.assign(conf, defaults, config);
 
-    this.width = width;
-    this.height = height;
+    this.width = width || 500;
+    this.height = height || 300;
 
     this.state = new State();
 
@@ -28,13 +35,13 @@ export default class Game{
     this.elapsed = 0; // Period
     this.time = 0;
 
-    parent.appendChild(this._canvas);
+    conf.parent.appendChild(this._canvas);
     var onresize = function () {
-      this._canvas.style.left = parent.clientWidth / 2 - width / 2 + "px";
-      this._canvas.style.top = parent.clientHeight / 2 - height / 2 + "px";
+      this._canvas.style.left = conf.parent.clientWidth / 2 - width / 2 + "px";
+      this._canvas.style.top = conf.parent.clientHeight / 2 - height / 2 + "px";
     }.bind(this);
     onresize();
-    parent.onresize = onresize;
+    conf.parent.onresize = onresize;
 
     this._tick = this._tick.bind(this);
     this.run = this.run.bind(this);
@@ -99,7 +106,8 @@ var tmp = {
   input : InputSystem,
   physics : PhysicsSystem,
   render : RenderSystem,
-  script : ScriptSystem
+  script : ScriptSystem,
+  text : TextSystem
 };
 
 // Bookmark systems once loaded so they can be shared across multiple states.

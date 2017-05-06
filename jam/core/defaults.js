@@ -24,5 +24,9 @@ export default defaults = {
 
   },
 
-  immovable : false
+  immovable : false,
+  buffer : {},
+  font : 'monospace12px',
+  text : '',
+  size : new v(800, 200)
 };

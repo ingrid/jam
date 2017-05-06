@@ -2,10 +2,11 @@ import defaults from './defaults';
 
 export default class System{
   constructor(game){
-    this.game = game;
     this.entities = [];
     this._remove = [];
-    this.required = [];
+
+    this.required = []; // Required componets.
+    this.dependencies = []; // Systems this system is dependent on.
   }
 
   init(e){

@@ -7,27 +7,39 @@ import InputSystem from './core/input';
 
 import Vector from './core/vector';
 import Geometry from './core/geometry';
+import proto from './core/proto';
 
 
-var lib;
-export default lib = {};
+var jam;
+export default jam = {};
 
 // Load all the default modules
-lib.Collision = CollisionSystem;
-lib.Game = Game;
-lib.Entity = Entity;
-lib.System = System;
-lib.State = State;
-lib.Input = InputSystem;
+jam.Collision = CollisionSystem;
+jam.Game = Game;
+jam.Entity = Entity;
+jam.System = System;
+jam.State = State;
+jam.Input = InputSystem;
 
 // Math libs
-lib.Vector = Vector;
-lib.Geometry = Geometry;
+jam.Vector = Vector;
+jam.Geometry = Geometry;
+
+jam.proto = proto;
 
 // Shortcuts
-lib.e = lib.Entity;
-lib.c = lib.Component;
-lib.s = lib.System;
+jam.e = jam.Entity;
+jam.c = jam.Component;
+jam.s = jam.System;
 
-lib.v = Vector;
-lib.g = Geometry;
+jam.v = jam.Vector;
+jam.g = jam.Geometry;
+jam.p = jam.proto;
+
+jam.init = function(f){
+  if (document.readyState === "complete"){
+    f();
+  }else{
+    window.onload = f;
+  }
+};

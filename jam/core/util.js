@@ -1,7 +1,7 @@
 var lib;
 export default lib = {};
 
-lib.mixinOn = function (o) {
+lib.mixin = function (o) {
   o.on = function (fnName, doFn) {
     var old = o[fnName];
     o[fnName] = function () {

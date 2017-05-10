@@ -1,22 +1,23 @@
-import State from './state';
-
-import DebugSystem from './debug';
-import InputSystem from './input';
-import PhysicsSystem from './physics';
-import RenderSystem from './render';
-import ScriptSystem from './script';
-import TextSystem from './text';
+import State from "./state";
+import util from "./util";
+import conf from "./config";
+import DebugSystem from "./debug";
+import InputSystem from "./input";
+import PhysicsSystem from "./physics";
+import RenderSystem from "./render";
+import ScriptSystem from "./script";
+import TextSystem from "./text";
 
 var defaults = { parent : document.body,
-               debug : false,
-               zoom : 1,
-               fps : 60,
-               prefabs : false,
-               mixins : false };
+                 debug : false,
+                 zoom : 1,
+                 fps : 50,
+                 prefabs : false,
+                 mixins : false,
+                 pixels : false };
 
 export default class Game{
   constructor(width, height, config){
-    var conf = {};
     Object.assign(conf, defaults, config);
 
     this.width = width || 500;
@@ -29,9 +30,36 @@ export default class Game{
     this._canvas.style.border = "1px solid black";
     this._canvas.width = this.width;
     this._canvas.height = this.height;
-    this._context = this._canvas.getContext("2d");
+    this._context = this._canvas.getContext("2d", {alpha: false});
 
-    this.fps = 50; // Frequency
+    if (conf.zoom > 1){
+      console.log('foo');
+      this._canvas.style.width = conf.zoom * this.width;
+      this._canvas.style.height = conf.zoom * this.height;
+    }
+    if (conf.pixels){
+      this._canvas.style.imageRendering = "";
+
+      this._canvas.style.imageRendering += "-moz-crisp-edges";
+      this._canvas.style.imageRendering += "-webkit-crisp-edges";
+
+      this._canvas.style.imageRendering += "moz-crisp-edges";
+      this._canvas.style.imageRendering += "webkit-crisp-edges";
+
+      this._canvas.style.imageRendering += "pixelated";
+      this._canvas.style.imageRendering += "crisp-edges";
+    }
+
+    // this._canvas.style.position = "relative";
+    // this._canvas.style.border = "1px solid black";
+    var style = document.createElement('style');
+    style.innerHTML = `@font-face {
+      font-family: hellovetica;
+      src: url(../lib/hellovetica.ttf);
+    }`;
+    document.body.append(style);
+
+    this.fps = conf.fps; // Frequency
     this.elapsed = 0; // Period
     this.time = 0;
 
@@ -46,6 +74,22 @@ export default class Game{
     this._tick = this._tick.bind(this);
     this.run = this.run.bind(this);
     this.loop = this.loop.bind(this);
+
+    if (conf.debug) {
+    }
+    if (conf.zoom) {
+    }
+    if (conf.prefabs) {
+      // This is not contained right now.
+
+
+    }
+    if (conf.mixins) {
+      // This is not contained right now.
+      util.mixin(this);
+    }
+    if (conf.debug) {
+    }
   }
 
   run() {

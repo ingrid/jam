@@ -18,5 +18,7 @@
     "qunitjs": "^2.3.2",
     "webpack": "^2.3.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bdf": "^1.0.1"
+  }
 }

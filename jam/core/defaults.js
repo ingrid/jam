@@ -26,7 +26,7 @@ export default defaults = {
 
   immovable : false,
   buffer : {},
-  font : 'monospace12px',
+  font : "60px sans-serif",
   text : '',
   size : new v(800, 200)
 };

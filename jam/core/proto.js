@@ -2,11 +2,14 @@ var proto;
 export default proto = {};
 
 var color = function(r,g,b,a){
+  if (arguments.length == 1 || g == undefined){
+    return r; // it is already a color string
+  }
+
   if (arguments.length == 3 || a == undefined){
     a = 1;
   };
-  //return 'rgba('+r+','+g+','+b+','+a+')';
-  return 'rgb('+r+','+g+','+b+')';
+  return 'rgba('+r+','+g+','+b+','+a+')';
 };
 
 class du {

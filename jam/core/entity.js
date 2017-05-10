@@ -1,11 +1,17 @@
-import System from './system';
-import Game from './game';
+import System from "./system";
+import Game from "./game";
+import util from "./util";
+import config from "./config";
 
 export default class Entity{
   constructor(systems, components){
     this.systems = [];
     Object.assign(this, components);
     this.add(systems);
+
+    if (config.mixins){
+      util.mixin(this);
+    }
   }
 
   add(systems){

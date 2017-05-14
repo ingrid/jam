@@ -6,7 +6,6 @@ import cache from "../core/cache";
 
 export default class Sprite extends Entity{
   constructor(x, y, c){
-    var image;
     super(['script',
            'physics',
            'render'], {
@@ -14,7 +13,7 @@ export default class Sprite extends Entity{
              body : new g.Shape([new v(0, 0), new v(c.width, 0),
                                  new v(c.width, c.height), new v(0, c.height)]),
              velocity : new v(0, 0),
-             image : image,
+             image : null,
              visible : true
            });
 
@@ -28,7 +27,7 @@ export default class Sprite extends Entity{
         // this.imageLoaded();
       }.bind(this));
     }else{ // They passed in an object to define a placeholder image.
-      image = { src : proto.rect(c.width, c.height, c.color),
+      this.image = { src : proto.rect(c.width, c.height, c.color),
                   width : c.width,
                 height : c.height
                 };

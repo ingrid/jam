@@ -8,11 +8,12 @@ import InputSystem from './core/input';
 import Vector from './core/vector';
 import Geometry from './core/geometry';
 import proto from './core/proto';
+import cache from './core/cache';
 
 // prefabs
-import Sprite from './prefabs/sprite';
-import jGame from './prefabs/game'; // what should I call this?
-//import GameState from './prefabs/state';
+import PrefabSprite from './prefabs/sprite';
+import PrefabGame from './prefabs/game'; // what should I call this?
+//import PrefabState from './prefabs/state';
 
 var jam;
 export default jam = {};
@@ -30,6 +31,7 @@ jam.Vector = Vector;
 jam.Geometry = Geometry;
 
 jam.proto = proto;
+jam.cache = cache;
 
 // Shortcuts
 jam.e = jam.Entity;
@@ -40,8 +42,8 @@ jam.v = jam.Vector;
 jam.g = jam.Geometry;
 jam.p = jam.proto;
 
-jam.p.Sprite = Sprite;
-jam.p.Game = jGame;
+jam.p.Sprite = PrefabSprite;
+jam.p.Game = PrefabGame;
 // jam.p.State = GameState;
 
 jam.init = function(f){

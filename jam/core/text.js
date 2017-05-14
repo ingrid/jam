@@ -37,9 +37,7 @@ export default class TextSystem extends System{
   }
 
   update_entity(e, game){
-    console.log(1);
     if (e.old_text != e.text){
-      console.log(2222222222222222);
       e.buffer.ctx.clearRect(0, 0, e.buffer.can.width, e.buffer.can.height);
       e.buffer.ctx.fillText(e.text,0, 0);
       e.buffer.img.src = e.buffer.can.toDataURL();

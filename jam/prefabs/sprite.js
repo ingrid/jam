@@ -7,20 +7,6 @@ import cache from "../core/cache";
 export default class Sprite extends Entity{
   constructor(x, y, c){
     var image;
-    if (typeof c === 'string' || c instanceof String){
-      // They passed in an image.
-      // cache.load(c, function (obj) {
-      //   this.image = obj;
-      //   this.width = this.image.naturalWidth;
-      //   this.height = this.image.naturalHeight;
-      //   this.imageLoaded();
-      // }.bind(this));
-    }else{ // They passed in an object to define a placeholder image.
-      image = { src : proto.rect(c.width, c.height, c.color),
-                  width : c.width,
-                  height : c.height
-                };
-    }
     super(['script',
            'physics',
            'render'], {
@@ -31,6 +17,22 @@ export default class Sprite extends Entity{
              image : image,
              visible : true
            });
+
+    if (typeof c === 'string' || c instanceof String){
+      // They passed in an image.
+      cache.load(c, function (obj) {
+        this.image = {};
+        this.image.src = obj;
+        this.image.width = this.image.naturalWidth;
+        this.image.height = this.image.naturalHeight;
+        // this.imageLoaded();
+      }.bind(this));
+    }else{ // They passed in an object to define a placeholder image.
+      image = { src : proto.rect(c.width, c.height, c.color),
+                  width : c.width,
+                height : c.height
+                };
+    }
     this.width = c.width;
     this.height = c.height;
   }

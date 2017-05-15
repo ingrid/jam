@@ -31,8 +31,8 @@ export default class TextSystem extends System{
     e.buffer.ctx.fillText(0, 0, e.text);
     e.buffer.img.src = e.buffer.can.toDataURL();
     e.image = {src : e.buffer.img,
-               width : 800,
-               height : 200
+               size : { x:800, y:200 },
+               offset : { x:0, y:0 }
               };
   }
 
@@ -42,8 +42,8 @@ export default class TextSystem extends System{
       e.buffer.ctx.fillText(e.text,0, 0);
       e.buffer.img.src = e.buffer.can.toDataURL();
       e.image = {src : e.buffer.img,
-                 width : 800,
-                 height : 200
+                 size : { x:800, y:200 },
+                 offset : { x:0, y:0 }
                 };
       e.old_text = e.text;
     }

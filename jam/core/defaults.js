@@ -11,8 +11,8 @@ export default defaults = {
 
   image : {
     src : null,
-    width : 0,
-    height : 0
+    size : new v(0, 0),
+    offset : new v(0, 0)
   },
   alpha : 1,
   angle : 0,

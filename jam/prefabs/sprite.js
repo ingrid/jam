@@ -18,19 +18,31 @@ export default class Sprite extends Entity{
            });
 
     if (typeof c === 'string' || c instanceof String){
-      // They passed in an image.
+      // They passed in an image and want us to figure out the size and offset.
       cache.load(c, function (obj) {
         this.image = {};
         this.image.src = obj;
-        this.image.width = this.image.naturalWidth;
-        this.image.height = this.image.naturalHeight;
-        // this.imageLoaded();
+        this.image.size = {};
+        this.image.size.x = obj.naturalWidth;
+        this.image.size.y = obj.naturalHeight;
+        this.image.offset = { x:0, y:0 };
       }.bind(this));
-    }else{ // They passed in an object to define a placeholder image.
+    }else if(typeof c.src === 'string' || c.src instanceof String){
+      // They passed in an image with specifications.
+      cache.load(c.src, function (obj) {
+        this.image = {};
+        this.image.src = obj;
+        this.image.size = {};
+        this.image.size.x = c.width;
+        this.image.size.y = c.height;
+        this.image.offset = { x:0, y:0 };
+      }.bind(this));
+    }else{
+      // They passed in a config for a proto image.
       this.image = { src : proto.rect(c.width, c.height, c.color),
-                  width : c.width,
-                height : c.height
-                };
+                     size : { x:c.width, y:c.height },
+                     offset : { x:0, y:0 }
+                   };
     }
     this.width = c.width;
     this.height = c.height;

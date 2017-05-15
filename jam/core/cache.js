@@ -12,6 +12,8 @@ class SubCache{
     this.total = 0; // Total objects to preload.
     this.current = 0; // Number of objects that completely loaded.
     this.start_time = new Date().getTime();
+    this.preload = this.preload.bind(this);
+    this._draw_preloader = this._draw_preloader.bind(this);
   }
 
   preload(url){
@@ -27,8 +29,8 @@ class SubCache{
     var ctx = can.getContext("2d");
     if (this.current < this.total){
       window.setTimeout(function(){
-        this._draw_preloader(ctx, callback);
-      }, 50);
+        this._draw_preloader(can, callback);
+      }.bind(this), 50);
       ctx.clearRect(0, 0, can.width, can.height);
       ctx.fillStyle = "rgba(0,0,0,1)";
       ctx.fillRect(can.width/2 - 102, can.height/2 - 12, 204, 24);
@@ -66,11 +68,12 @@ lib.load = function(url, onload){
   var obj;
   if (url.match(/\.(jpeg|jpg|png|gif)(\?.*)?$/) || url.match(/^data:image/)){
     // image
-    obj = new Image(url);
+    obj = new Image();
+    obj.src = url+"?_="+(new Date().getTime());
     obj.onload = function (){
       onload(obj);
     };
-    obj.src = url;
+    //obj.src = url;
     lib._cache[url] = obj;
   }else if (url.match(/\.(mp3|ogg|wav)(\?.*)?$/) || url.match(/^data:audio/)){
       // audio

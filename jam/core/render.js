@@ -24,9 +24,9 @@ export default class RenderSystem extends System{
       if (entity.image !== null && entity.visible) {
         // Avoid automatic blending if we have non-integer values
         var tx = Math.floor(entity.position.x - game.state.camera.scroll.x *
-                            entity.parallax.x + entity.image.width / 2);
+                            entity.parallax.x + entity.image.size.x / 2);
         var ty = Math.floor(entity.position.y - game.state.camera.scroll.y *
-                            entity.parallax.y + entity.image.height / 2);
+                            entity.parallax.y + entity.image.size.y / 2);
         if (false){ // Check if sprite is in bounds.
         }
         // I also need a check for if an entity is bigger than the view.
@@ -39,10 +39,10 @@ export default class RenderSystem extends System{
         if (entity.facing == RenderSystem.LEFT) { game._context.scale(-1, 1); }
 
         game._context.drawImage(entity.image.src,
-                                0, 0,
-                                entity.image.width, entity.image.height,
-                                -entity.image.width / 2, -entity.image.height / 2,
-                                entity.image.width, entity.image.height);
+                                entity.image.offset.x, entity.image.offset.y,
+                                entity.image.size.x, entity.image.size.y,
+                                -entity.image.size.x / 2, -entity.image.size.y / 2,
+                                entity.image.size.x, entity.image.size.y);
 
         game._context.restore();
         if (entity.children){

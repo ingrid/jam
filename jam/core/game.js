@@ -1,6 +1,8 @@
 import State from "./state";
 import util from "./util";
 import conf from "./config";
+
+import AnimationSystem from "./animation";
 import DebugSystem from "./debug";
 import InputSystem from "./input";
 import PhysicsSystem from "./physics";
@@ -146,6 +148,7 @@ export default class Game{
 }
 
 var tmp = {
+  animation : AnimationSystem,
   debug : DebugSystem,
   input : InputSystem,
   physics : PhysicsSystem,

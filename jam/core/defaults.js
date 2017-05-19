@@ -2,7 +2,7 @@ import v from './vector';
 
 // Default component entities, so you don't have to specify stuff like
 // velocity 0/0 and acceleration 0/0 on a bunch of sprites.
-
+// Need to make a function that returns the value for the case of objects.
 var defaults;
 export default defaults = {
   position : new v(0, 0),
@@ -28,5 +28,6 @@ export default defaults = {
   buffer : {},
   font : "60px sans-serif",
   text : '',
-  size : new v(800, 200)
+  size : new v(800, 200),
+  frame : 0
 };

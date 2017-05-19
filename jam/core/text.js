@@ -10,7 +10,7 @@ export default class TextSystem extends System{
                      'size',
                      'text',
                      'image',
-                     'old_text'];
+                     'previous_text'];
   }
 
   init(e){
@@ -37,7 +37,7 @@ export default class TextSystem extends System{
   }
 
   update_entity(e, game){
-    if (e.old_text != e.text){
+    if (e.previous_text != e.text){
       e.buffer.ctx.clearRect(0, 0, e.buffer.can.width, e.buffer.can.height);
       e.buffer.ctx.fillText(e.text,0, 0);
       e.buffer.img.src = e.buffer.can.toDataURL();
@@ -45,7 +45,7 @@ export default class TextSystem extends System{
                  size : { x:800, y:200 },
                  offset : { x:0, y:0 }
                 };
-      e.old_text = e.text;
+      e.previous_text = e.text;
     }
   }
 }

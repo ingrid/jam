@@ -9,6 +9,9 @@ export default class System{
     this.dependencies = []; // Systems this system is dependent on.
   }
 
+  load(j){
+  }
+
   init(e){
     // Look at prexisting components on the entity,
     // populate with default values if necessary.

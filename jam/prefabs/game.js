@@ -1,4 +1,12 @@
 import Game from "../core/game";
 
-class PrefabGame extends Game{
+export default class PrefabGame extends Game{
+  constructor(){
+    this.register(['input',
+                   'physics',
+                   'script',
+                   'animation',
+                   'text',
+                   'render']);
+  }
 }

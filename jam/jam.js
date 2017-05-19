@@ -5,6 +5,10 @@ import System from './core/system';
 import State from './core/state';
 import InputSystem from './core/input';
 
+// Patch until we implement system onload
+import AnimationSystem from './core/animation';
+
+
 import Vector from './core/vector';
 import Geometry from './core/geometry';
 import proto from './core/proto';
@@ -45,6 +49,8 @@ jam.p = jam.proto;
 jam.p.Sprite = PrefabSprite;
 jam.p.Game = PrefabGame;
 // jam.p.State = GameState;
+
+jam.Animation = AnimationSystem.Animation;
 
 jam.init = function(f){
   if (document.readyState === "complete"){

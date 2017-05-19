@@ -19,12 +19,13 @@ export default class System{
     for (i = 0; i < this.required.length; i++){
       // Only looking for undefined, null is allowed.
       if (e[this.required[i]] == undefined){
-        var def_val = defaults[this.required[i]];
-        if (def_val == undefined){
+        var def_fun = defaults[this.required[i]];
+        if (def_fun == undefined){
           console.log("No value specified and no default found for component name: "
                       + this.required[i]);
         }else{
-          e[this.required[i]] = def_val;
+          //e[this.required[i]] = def_val;
+          def_fun(e);
         }
       }
     }

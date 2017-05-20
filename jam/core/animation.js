@@ -25,7 +25,7 @@ class Animation{
         yi = 0;
       }
       x = (xi*this.size.x)+this.offset.x+(this.padding.x*xi);
-      y = yi+this.offset.y+(this.padding.y*yi);
+      y = (yi*this.size.y)+this.offset.y+(this.padding.y*yi);
       this.frames.push({
         src : this.src,
         size : this.size,

@@ -10,6 +10,7 @@ export default class System{
   }
 
   load(j){
+
   }
 
   init(e){
@@ -21,10 +22,9 @@ export default class System{
       if (e[this.required[i]] == undefined){
         var def_fun = defaults[this.required[i]];
         if (def_fun == undefined){
-          console.log("No value specified and no default found for component name: "
+          console.log("No value specified and no default for component name: "
                       + this.required[i]);
         }else{
-          //e[this.required[i]] = def_val;
           def_fun(e);
         }
       }

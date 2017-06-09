@@ -4,6 +4,16 @@ var pool = [];
 
 export default class Vector {
   constructor(x, y){
+    if (typeof x === 'string' || x instanceof String){
+      var vals = x.split(",");
+      x = vals[0];
+      x = x.substring(1, x.length);
+      x = parseInt(x);
+      y = vals[1];
+      y = y.substring(0, y.length-1);
+      y = parseInt(y);
+    }
+
     this.x = x || 0;
     this.y = y || 0;
   }

@@ -5,7 +5,8 @@ import v from "./vector";
 var defaults = {src : null,
                 size : new v(16, 16),
                 offset : new v(0, 0),
-                wrap : 0};
+                wrap : 0,
+                loop : true}; // Right now this doens't do anything, single loop animations are handled with callbacks.
 
 class Animation{
   constructor(c, frames, rate){
@@ -41,7 +42,7 @@ export default class AnimationSystem extends System{
     this.required = ['animations',
                      'current_animation',
                      'frame',
-                    'previous_animation'];
+                     'previous_animation'];
   }
 
   update_entity(e, game){

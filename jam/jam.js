@@ -17,7 +17,7 @@ import cache from './core/cache';
 // prefabs
 import PrefabSprite from './prefabs/sprite';
 import PrefabGame from './prefabs/game'; // what should I call this?
-//import PrefabState from './prefabs/state';
+import PrefabState from './prefabs/state';
 
 var jam;
 export default jam = {};
@@ -48,7 +48,11 @@ jam.p = jam.proto;
 
 jam.p.Sprite = PrefabSprite;
 jam.p.Game = PrefabGame;
-// jam.p.State = GameState;
+jam.p.State = PrefabState;
+
+jam.jSprite = PrefabSprite;
+jam.jGame = PrefabGame;
+jam.jState = PrefabState;
 
 jam.Animation = AnimationSystem.Animation;
 

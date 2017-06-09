@@ -1,4 +1,4 @@
-import jam from "../../../../jam/jam";
+import jam from "jam";
 
 jam.init(function(){
   var config = { parent : document.body,
